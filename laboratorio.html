@@ -1,0 +1,3782 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+<title>Laboratorio - Silent Scream</title>
+
+<style>
+
+/* =========================================================
+   RESET
+========================================================= */
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    -webkit-tap-highlight-color:transparent;
+}
+
+html{
+    scroll-behavior:smooth;
+}
+
+body{
+
+    min-height:100vh;
+
+    background:#010005;
+
+    color:white;
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x:hidden;
+}
+
+
+/* =========================================================
+   SFONDO SPAZIALE
+========================================================= */
+
+.sfondo{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:-10;
+
+    overflow:hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 50%,
+            rgba(80,0,130,.12),
+            transparent 35%
+        ),
+
+        radial-gradient(
+            circle at 20% 20%,
+            rgba(0,80,255,.08),
+            transparent 30%
+        ),
+
+        radial-gradient(
+            circle at 80% 80%,
+            rgba(255,0,120,.06),
+            transparent 30%
+        ),
+
+        #010005;
+}
+
+
+/* =========================================================
+   STELLE
+========================================================= */
+
+.stella{
+
+    position:fixed;
+
+    top:-20px;
+
+    width:2px;
+    height:2px;
+
+    border-radius:50%;
+
+    background:white;
+
+    box-shadow:
+        0 0 5px white,
+        0 0 10px rgba(255,255,255,.8);
+
+    pointer-events:none;
+
+    z-index:-5;
+
+    animation:
+        cadutaStella linear forwards;
+}
+
+
+@keyframes cadutaStella{
+
+    0%{
+
+        transform:
+            translate3d(0,-20px,0)
+            rotate(0deg);
+
+        opacity:0;
+
+    }
+
+    10%{
+        opacity:1;
+    }
+
+    90%{
+        opacity:.8;
+    }
+
+    100%{
+
+        transform:
+            translate3d(var(--movimento),110vh,0)
+            rotate(180deg);
+
+        opacity:0;
+    }
+}
+
+
+/* =========================================================
+   BUCHI NERI
+========================================================= */
+
+.buco-nero{
+
+    position:fixed;
+
+    width:var(--dimensione);
+    height:var(--dimensione);
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    z-index:-4;
+
+    transform:scale(.2);
+
+    animation:
+        apparizioneBuco 1s ease-out forwards,
+        dissolvenzaBuco 7s ease-in forwards;
+
+    filter:
+        drop-shadow(
+            0 0 20px rgba(120,0,255,.7)
+        );
+}
+
+
+.buco-nero::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-35%;
+
+    border-radius:50%;
+
+    background:
+
+        conic-gradient(
+            from 0deg,
+            transparent,
+            #7d00ff,
+            #00aaff,
+            #ff00aa,
+            #7d00ff,
+            transparent
+        );
+
+    filter:
+        blur(8px);
+
+    animation:
+        rotazioneBuco 2s linear infinite;
+}
+
+
+.buco-nero::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:12%;
+
+    border-radius:50%;
+
+    background:
+
+        radial-gradient(
+            circle,
+            #000 0 42%,
+            #030006 55%,
+            #15002b 70%,
+            transparent 72%
+        );
+
+    box-shadow:
+        inset 0 0 25px #000,
+        0 0 25px rgba(90,0,255,.8);
+}
+
+
+@keyframes apparizioneBuco{
+
+    0%{
+        transform:scale(.1);
+        opacity:0;
+    }
+
+    100%{
+        transform:scale(1);
+        opacity:1;
+    }
+}
+
+
+@keyframes dissolvenzaBuco{
+
+    0%{
+        opacity:1;
+    }
+
+    65%{
+        opacity:1;
+    }
+
+    100%{
+        opacity:0;
+    }
+}
+
+
+@keyframes rotazioneBuco{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}
+
+
+/* =========================================================
+   LABORATORIO
+========================================================= */
+
+.laboratorio{
+
+    width:min(1200px,94%);
+
+    margin:auto;
+
+    padding:
+        70px 0
+        100px;
+
+    position:relative;
+}
+
+
+/* =========================================================
+   TITOLO
+========================================================= */
+
+.laboratorio > h1{
+
+    text-align:center;
+
+    font-size:
+        clamp(42px,8vw,90px);
+
+    letter-spacing:
+        clamp(5px,2vw,15px);
+
+    color:#fff;
+
+    text-shadow:
+
+        0 0 10px #8a2be2,
+        0 0 25px #8a2be2,
+        0 0 60px #8a2be2;
+
+    animation:
+        titoloPulse 3s ease-in-out infinite;
+}
+
+
+@keyframes titoloPulse{
+
+    0%,100%{
+        text-shadow:
+            0 0 10px #8a2be2,
+            0 0 25px #8a2be2,
+            0 0 45px #8a2be2;
+    }
+
+    50%{
+        text-shadow:
+            0 0 20px #8a2be2,
+            0 0 50px #8a2be2,
+            0 0 100px #8a2be2;
+    }
+}
+
+
+.sottotitolo{
+
+    text-align:center;
+
+    margin-top:12px;
+
+    color:#888;
+
+    font-size:16px;
+
+    letter-spacing:2px;
+}
+
+
+/* =========================================================
+   ATOMI
+========================================================= */
+
+.atomi-laboratorio{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:65px 35px;
+
+    margin-top:90px;
+}
+
+
+.atomo-elemento{
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    min-width:0;
+
+    animation:
+        entrataAtomo .8s ease both;
+}
+
+
+.atomo-elemento:nth-child(2){
+    animation-delay:.1s;
+}
+
+.atomo-elemento:nth-child(3){
+    animation-delay:.2s;
+}
+
+.atomo-elemento:nth-child(4){
+    animation-delay:.3s;
+}
+
+.atomo-elemento:nth-child(5){
+    animation-delay:.4s;
+}
+
+.atomo-elemento:nth-child(6){
+    animation-delay:.5s;
+}
+
+
+@keyframes entrataAtomo{
+
+    from{
+        opacity:0;
+        transform:translateY(30px);
+    }
+
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+
+/* =========================================================
+   ATOMO GRAFICO
+========================================================= */
+
+.atomo-lab{
+
+    position:relative;
+
+    width:190px;
+    height:190px;
+
+    transition:
+        transform .35s ease,
+        filter .35s ease;
+
+    animation:
+        galleggiamento 4s ease-in-out infinite;
+}
+
+
+.atomo-elemento:nth-child(2)
+.atomo-lab{
+    animation-delay:-1s;
+}
+
+.atomo-elemento:nth-child(3)
+.atomo-lab{
+    animation-delay:-2s;
+}
+
+.atomo-elemento:nth-child(4)
+.atomo-lab{
+    animation-delay:-3s;
+}
+
+.atomo-elemento:nth-child(5)
+.atomo-lab{
+    animation-delay:-1.5s;
+}
+
+.atomo-elemento:nth-child(6)
+.atomo-lab{
+    animation-delay:-2.5s;
+}
+
+
+@keyframes galleggiamento{
+
+    0%,100%{
+        transform:
+            translateY(0)
+            rotate(0deg);
+    }
+
+    25%{
+        transform:
+            translateY(-12px)
+            rotate(2deg);
+    }
+
+    50%{
+        transform:
+            translateY(0)
+            rotate(-2deg);
+    }
+
+    75%{
+        transform:
+            translateY(10px)
+            rotate(2deg);
+    }
+}
+
+
+/* =========================================================
+   NUCLEO
+========================================================= */
+
+.nucleo{
+
+    position:absolute;
+
+    width:42px;
+    height:42px;
+
+    top:50%;
+    left:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle at 35% 30%,
+            white,
+            var(--atomo-colore,#8a2be2) 35%,
+            #08000f 75%
+        );
+
+    box-shadow:
+
+        0 0 10px
+            var(--atomo-colore,#8a2be2),
+
+        0 0 25px
+            var(--atomo-colore,#8a2be2),
+
+        0 0 55px
+            var(--atomo-colore,#8a2be2);
+
+    animation:
+        nucleoPulse 1.1s ease-in-out infinite;
+}
+
+
+@keyframes nucleoPulse{
+
+    0%,100%{
+        transform:
+            translate(-50%,-50%)
+            scale(.9);
+    }
+
+    50%{
+        transform:
+            translate(-50%,-50%)
+            scale(1.15);
+    }
+}
+
+
+/* =========================================================
+   ORBITE
+========================================================= */
+
+.orbita{
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    width:100%;
+    height:45%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border:
+
+        2px solid
+        var(--atomo-colore,#8a2be2);
+
+    border-radius:50%;
+
+    opacity:.75;
+
+    box-shadow:
+
+        0 0 8px
+        var(--atomo-colore,#8a2be2),
+
+        inset 0 0 8px
+        rgba(255,255,255,.1);
+}
+
+
+.orbita:nth-child(2){
+
+    transform:
+        translate(-50%,-50%)
+        rotate(60deg);
+
+    animation:
+        orbitaA 3.5s linear infinite;
+}
+
+
+.orbita:nth-child(3){
+
+    transform:
+        translate(-50%,-50%)
+        rotate(-60deg);
+
+    animation:
+        orbitaB 4.5s linear infinite;
+}
+
+
+.orbita:nth-child(4){
+
+    transform:
+        translate(-50%,-50%)
+        rotate(90deg)
+        scale(.8);
+
+    animation:
+        orbitaC 2.8s linear infinite;
+}
+
+
+@keyframes orbitaA{
+
+    from{
+        transform:
+            translate(-50%,-50%)
+            rotate(60deg);
+    }
+
+    to{
+        transform:
+            translate(-50%,-50%)
+            rotate(420deg);
+    }
+}
+
+
+@keyframes orbitaB{
+
+    from{
+        transform:
+            translate(-50%,-50%)
+            rotate(-60deg);
+    }
+
+    to{
+        transform:
+            translate(-50%,-50%)
+            rotate(-420deg);
+    }
+}
+
+
+@keyframes orbitaC{
+
+    from{
+        transform:
+            translate(-50%,-50%)
+            rotate(90deg)
+            scale(.8);
+    }
+
+    to{
+        transform:
+            translate(-50%,-50%)
+            rotate(450deg)
+            scale(.8);
+    }
+}
+
+
+/* =========================================================
+   COLORI ATOMI
+========================================================= */
+
+.atomo-1{
+    --atomo-colore:#8a2be2;
+}
+
+.atomo-2{
+    --atomo-colore:#ff0000;
+}
+
+.atomo-3{
+    --atomo-colore:#008cff;
+}
+
+.atomo-4{
+    --atomo-colore:#00ff66;
+}
+
+.atomo-5{
+    --atomo-colore:#ff6a00;
+}
+
+.atomo-6{
+    --atomo-colore:#ff00aa;
+}
+
+
+.nome-atomo{
+
+    margin-top:25px;
+
+    text-align:center;
+
+    max-width:250px;
+
+    color:#aaa;
+
+    font-size:14px;
+
+    line-height:1.5;
+
+    letter-spacing:1px;
+}
+
+
+/* =========================================================
+   ARCHIVIO
+========================================================= */
+
+.archivio-atomi{
+
+    margin-top:130px;
+
+    padding:35px;
+
+    border:
+
+        1px solid
+        rgba(138,43,226,.4);
+
+    border-radius:25px;
+
+    background:
+        rgba(5,0,12,.65);
+
+    backdrop-filter:
+        blur(15px);
+
+    box-shadow:
+
+        0 0 50px
+        rgba(90,0,150,.12),
+
+        inset 0 0 40px
+        rgba(138,43,226,.03);
+}
+
+
+.archivio-atomi > h2{
+
+    text-align:center;
+
+    color:#b84cff;
+
+    font-size:
+        clamp(25px,5vw,40px);
+
+    letter-spacing:5px;
+
+    text-shadow:
+        0 0 20px #8a2be2;
+}
+
+
+.archivio-sottotitolo{
+
+    text-align:center;
+
+    color:#777;
+
+    margin-top:10px;
+
+    margin-bottom:35px;
+}
+
+
+/* =========================================================
+   CARD
+========================================================= */
+
+.card-atomi{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:18px;
+}
+
+
+.card-atomo{
+
+    min-height:180px;
+
+    padding:25px;
+
+    border-radius:18px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.12);
+
+    background:
+        rgba(255,255,255,.025);
+
+    cursor:pointer;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease,
+        border-color .25s ease;
+
+    position:relative;
+
+    overflow:hidden;
+}
+
+
+.card-atomo::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:150px;
+    height:150px;
+
+    right:-70px;
+    top:-70px;
+
+    border-radius:50%;
+
+    background:
+        var(--card-colore);
+
+    opacity:.12;
+
+    filter:blur(20px);
+}
+
+
+.card-atomo:hover{
+
+    transform:
+        translateY(-7px)
+        scale(1.02);
+
+    border-color:
+        var(--card-colore);
+
+    box-shadow:
+        0 0 30px
+        color-mix(
+            in srgb,
+            var(--card-colore) 30%,
+            transparent
+        );
+}
+
+
+.card-atomo:active{
+
+    transform:
+        scale(.96);
+}
+
+
+.card-punto{
+
+    width:12px;
+    height:12px;
+
+    border-radius:50%;
+
+    background:
+        var(--card-colore);
+
+    box-shadow:
+        0 0 15px
+        var(--card-colore);
+
+    margin-bottom:20px;
+}
+
+
+.card-atomo h3{
+
+    font-size:19px;
+
+    margin-bottom:8px;
+
+    color:
+        var(--card-colore);
+
+    text-shadow:
+        0 0 10px
+        var(--card-colore);
+}
+
+
+.card-atomo p{
+
+    color:#888;
+
+    font-size:14px;
+
+    margin-bottom:20px;
+}
+
+
+.card-atomo span{
+
+    color:#ddd;
+
+    font-size:12px;
+
+    letter-spacing:2px;
+}
+
+
+.card-viola{
+    --card-colore:#8a2be2;
+}
+
+.card-rosso{
+    --card-colore:#ff0000;
+}
+
+.card-blu{
+    --card-colore:#008cff;
+}
+
+.card-verde{
+    --card-colore:#00ff66;
+}
+
+.card-arancione{
+    --card-colore:#ff6a00;
+}
+
+.card-rosa{
+    --card-colore:#ff00aa;
+}
+
+
+/* =========================================================
+   DETTAGLI
+========================================================= */
+
+.dettagli-atomo{
+
+    display:none;
+
+    margin-top:30px;
+
+    position:relative;
+
+    padding:35px;
+
+    border:
+
+        1px solid
+        var(--dettaglio-colore,#8a2be2);
+
+    border-radius:22px;
+
+    background:
+        rgba(0,0,0,.72);
+
+    box-shadow:
+
+        0 0 45px
+        color-mix(
+            in srgb,
+            var(--dettaglio-colore,#8a2be2)
+            25%,
+            transparent
+        );
+
+    animation:
+        aperturaDettagli .45s ease;
+}
+
+
+.dettagli-atomo.aperto{
+
+    display:block;
+}
+
+
+@keyframes aperturaDettagli{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(30px)
+            scale(.97);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0)
+            scale(1);
+    }
+}
+
+
+.chiudi-dettagli{
+
+    position:absolute;
+
+    top:18px;
+    right:18px;
+
+    width:42px;
+    height:42px;
+
+    border-radius:50%;
+
+    border:
+        1px solid
+        rgba(255,255,255,.2);
+
+    background:
+        rgba(255,255,255,.05);
+
+    color:white;
+
+    font-size:20px;
+
+    cursor:pointer;
+
+    transition:.2s;
+}
+
+
+.chiudi-dettagli:hover{
+
+    background:#ff0033;
+
+    transform:
+        rotate(90deg);
+}
+
+
+.dettagli-contenuto{
+
+    max-width:900px;
+
+    margin:auto;
+
+    padding-top:10px;
+}
+
+
+.dettagli-punto{
+
+    width:20px;
+    height:20px;
+
+    border-radius:50%;
+
+    background:
+        var(--dettaglio-colore);
+
+    box-shadow:
+        0 0 25px
+        var(--dettaglio-colore);
+
+    margin-bottom:20px;
+}
+
+
+#dettagli-titolo{
+
+    color:
+        var(--dettaglio-colore);
+
+    font-size:
+        clamp(25px,5vw,42px);
+
+    text-shadow:
+        0 0 15px
+        var(--dettaglio-colore);
+}
+
+
+#dettagli-descrizione{
+
+    color:#999;
+
+    line-height:1.7;
+
+    margin-top:10px;
+}
+
+
+/* =========================================================
+   SCANNER
+========================================================= */
+
+.scanner-atomo{
+
+    margin-top:30px;
+
+    padding:20px;
+
+    border-radius:15px;
+
+    background:#020204;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+}
+
+
+.scanner-testo{
+
+    font-family:monospace;
+
+    color:
+        var(--dettaglio-colore);
+
+    margin-bottom:14px;
+
+    font-size:13px;
+
+    letter-spacing:1px;
+}
+
+
+.scanner-linea{
+
+    height:10px;
+
+    width:100%;
+
+    border-radius:20px;
+
+    overflow:hidden;
+
+    background:
+        rgba(255,255,255,.08);
+}
+
+
+#scanner-progresso{
+
+    width:0%;
+
+    height:100%;
+
+    border-radius:20px;
+
+    background:
+        var(--dettaglio-colore);
+
+    box-shadow:
+        0 0 15px
+        var(--dettaglio-colore);
+
+    transition:
+        width .08s linear;
+}
+
+
+#scanner-percentuale{
+
+    text-align:right;
+
+    margin-top:8px;
+
+    color:#777;
+
+    font-family:monospace;
+}
+
+
+/* =========================================================
+   STATISTICHE
+========================================================= */
+
+.statistiche-atomo{
+
+    display:grid;
+
+    gap:20px;
+
+    margin-top:30px;
+}
+
+
+.statistica{
+
+    padding:15px;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.025);
+}
+
+
+.statistica-header{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    gap:15px;
+
+    margin-bottom:10px;
+
+    color:#999;
+
+    font-size:13px;
+}
+
+
+.statistica-header strong{
+
+    color:
+        var(--dettaglio-colore);
+}
+
+
+.barra{
+
+    height:8px;
+
+    border-radius:20px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    overflow:hidden;
+}
+
+
+.barra div{
+
+    height:100%;
+
+    width:0%;
+
+    background:
+        var(--dettaglio-colore);
+
+    box-shadow:
+        0 0 12px
+        var(--dettaglio-colore);
+
+    transition:
+        width .5s ease;
+}
+
+
+/* =========================================================
+   DATI TECNICI
+========================================================= */
+
+.dettagli-info{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+    margin-top:25px;
+}
+
+
+.dettagli-info > div{
+
+    padding:18px;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+
+.dettagli-info span{
+
+    display:block;
+
+    color:#666;
+
+    font-size:11px;
+
+    letter-spacing:2px;
+
+    margin-bottom:8px;
+}
+
+
+.dettagli-info strong{
+
+    color:#ddd;
+
+    font-size:14px;
+}
+
+
+/* =========================================================
+   BOTTONE ANALISI
+========================================================= */
+
+.analizza-btn{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:17px;
+
+    border:
+
+        1px solid
+        var(--dettaglio-colore);
+
+    border-radius:12px;
+
+    background:
+        rgba(0,0,0,.5);
+
+    color:white;
+
+    font-size:15px;
+
+    font-weight:bold;
+
+    letter-spacing:1px;
+
+    cursor:pointer;
+
+    transition:.25s;
+}
+
+
+.analizza-btn:hover{
+
+    background:
+        var(--dettaglio-colore);
+
+    box-shadow:
+        0 0 25px
+        var(--dettaglio-colore);
+
+    transform:
+        translateY(-2px);
+}
+
+
+.analizza-btn:active{
+
+    transform:
+        scale(.97);
+}
+
+
+/* =========================================================
+   ESPERIMENTO
+========================================================= */
+
+.esperimento{
+
+    display:none;
+
+    margin-top:30px;
+
+    padding:25px;
+
+    border:
+
+        1px solid
+        var(--dettaglio-colore);
+
+    border-radius:18px;
+
+    background:
+        rgba(0,0,0,.4);
+
+    animation:
+        comparsaEsperimento .5s ease;
+}
+
+
+.esperimento.attivo{
+
+    display:block;
+}
+
+
+@keyframes comparsaEsperimento{
+
+    from{
+        opacity:0;
+        transform:
+            translateY(20px);
+    }
+
+    to{
+        opacity:1;
+        transform:
+            translateY(0);
+    }
+}
+
+
+.esperimento h3{
+
+    color:
+        var(--dettaglio-colore);
+
+    font-size:22px;
+
+    margin-bottom:8px;
+}
+
+
+.esperimento-sottotitolo{
+
+    color:#777;
+
+    font-size:14px;
+
+    line-height:1.6;
+}
+
+
+/* =========================================================
+   CONTROLLI
+========================================================= */
+
+.controlli-esperimento{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:12px;
+
+    margin-top:25px;
+}
+
+
+.controllo-esperimento button{
+
+    width:100%;
+
+    min-height:52px;
+
+    padding:13px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.15);
+
+    border-radius:10px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:white;
+
+    cursor:pointer;
+
+    font-weight:bold;
+
+    transition:.2s;
+}
+
+
+.controllo-esperimento button:hover{
+
+    background:
+        var(--dettaglio-colore);
+
+    border-color:
+        var(--dettaglio-colore);
+
+    box-shadow:
+        0 0 20px
+        var(--dettaglio-colore);
+}
+
+
+.controllo-esperimento button:active{
+
+    transform:
+        scale(.95);
+}
+
+
+/* =========================================================
+   VALORI LIVE
+========================================================= */
+
+.valori-esperimento{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:12px;
+
+    margin-top:25px;
+}
+
+
+.valore-esperimento{
+
+    padding:18px;
+
+    text-align:center;
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.025);
+
+    border:
+        1px solid
+        rgba(255,255,255,.08);
+}
+
+
+.valore-esperimento span{
+
+    display:block;
+
+    color:#666;
+
+    font-size:10px;
+
+    letter-spacing:1px;
+
+    margin-bottom:8px;
+}
+
+
+.valore-esperimento strong{
+
+    color:
+        var(--dettaglio-colore);
+
+    font-size:25px;
+
+    text-shadow:
+        0 0 10px
+        var(--dettaglio-colore);
+}
+
+
+.barra-esperimento{
+
+    height:7px;
+
+    margin-top:10px;
+
+    background:
+        rgba(255,255,255,.08);
+
+    border-radius:20px;
+
+    overflow:hidden;
+}
+
+
+.barra-esperimento div{
+
+    height:100%;
+
+    width:0%;
+
+    background:
+        var(--dettaglio-colore);
+
+    box-shadow:
+        0 0 12px
+        var(--dettaglio-colore);
+
+    transition:.3s;
+}
+
+
+/* =========================================================
+   CONSOLE
+========================================================= */
+
+.console-esperimento{
+
+    margin-top:20px;
+
+    min-height:60px;
+
+    padding:18px;
+
+    background:#020202;
+
+    border-radius:10px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    font-family:
+        monospace;
+
+    font-size:13px;
+
+    line-height:1.6;
+}
+
+
+.verde{
+    color:#00ff66;
+}
+
+.rosso{
+    color:#ff3333;
+}
+
+.giallo{
+    color:#ffd000;
+}
+
+
+/* =========================================================
+   ALLARME
+========================================================= */
+
+.esperimento-pericoloso{
+
+    animation:
+        allarme 0.3s infinite alternate;
+}
+
+
+@keyframes allarme{
+
+    from{
+        box-shadow:
+            0 0 10px
+            rgba(255,0,0,.1);
+    }
+
+    to{
+        box-shadow:
+            0 0 45px
+            rgba(255,0,0,.7);
+    }
+}
+
+
+.nucleo-sovraccarico{
+
+    animation:
+        sovraccarico .12s infinite alternate
+        !important;
+
+    filter:
+        brightness(2.5)
+        drop-shadow(
+            0 0 40px
+            var(--atomo-colore)
+        );
+}
+
+
+@keyframes sovraccarico{
+
+    from{
+        transform:
+            scale(1);
+    }
+
+    to{
+        transform:
+            scale(1.3);
+    }
+}
+
+
+/* =========================================================
+   TORNA INDIETRO
+========================================================= */
+
+.torna-indietro{
+
+    display:block;
+
+    width:max-content;
+
+    margin:
+        50px auto 0;
+
+    padding:
+        14px 24px;
+
+    border:
+        1px solid
+        #8a2be2;
+
+    border-radius:12px;
+
+    color:#ddd;
+
+    text-decoration:none;
+
+    transition:.25s;
+}
+
+
+.torna-indietro:hover{
+
+    color:white;
+
+    background:#8a2be2;
+
+    box-shadow:
+        0 0 25px
+        #8a2be2;
+}
+
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:700px){
+
+    .laboratorio{
+
+        width:92%;
+
+        padding-top:45px;
+
+        padding-bottom:70px;
+    }
+
+
+    .atomi-laboratorio{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+        gap:55px 15px;
+
+        margin-top:60px;
+    }
+
+
+    .atomo-lab{
+
+        width:135px;
+
+        height:135px;
+    }
+
+
+    .nucleo{
+
+        width:32px;
+        height:32px;
+    }
+
+
+    .nome-atomo{
+
+        font-size:11px;
+
+        max-width:145px;
+    }
+
+
+    .archivio-atomi{
+
+        margin-top:90px;
+
+        padding:20px 14px;
+
+        border-radius:18px;
+    }
+
+
+    .card-atomi{
+
+        grid-template-columns:1fr;
+
+        gap:12px;
+    }
+
+
+    .card-atomo{
+
+        min-height:145px;
+
+        padding:20px;
+    }
+
+
+    .dettagli-atomo{
+
+        padding:25px 15px;
+
+        border-radius:18px;
+    }
+
+
+    .dettagli-info{
+
+        grid-template-columns:1fr;
+
+    }
+
+
+    .controlli-esperimento{
+
+        grid-template-columns:1fr;
+    }
+
+
+    .valori-esperimento{
+
+        grid-template-columns:1fr;
+    }
+
+
+    .valore-esperimento{
+
+        padding:15px;
+    }
+
+
+    .analizza-btn{
+
+        min-height:55px;
+
+        font-size:14px;
+    }
+
+
+    .chiudi-dettagli{
+
+        width:38px;
+        height:38px;
+
+        top:12px;
+        right:12px;
+    }
+
+}
+
+
+@media(max-width:380px){
+
+    .atomo-lab{
+
+        width:115px;
+
+        height:115px;
+    }
+
+
+    .nome-atomo{
+
+        font-size:10px;
+
+        max-width:125px;
+    }
+
+
+    .laboratorio > h1{
+
+        font-size:38px;
+
+        letter-spacing:4px;
+    }
+
+}
+
+
+/* =========================================================
+   RIDUZIONE ANIMAZIONI SE RICHIESTA DAL SISTEMA
+========================================================= */
+
+@media(prefers-reduced-motion:reduce){
+
+    *,
+    *::before,
+    *::after{
+
+        animation-duration:.01ms !important;
+
+        animation-iteration-count:1 !important;
+
+        scroll-behavior:auto !important;
+    }
+
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<!-- =======================================================
+     SFONDO
+======================================================= -->
+
+<div class="sfondo"></div>
+
+
+<main class="laboratorio">
+
+
+<h1>LABORATORIO</h1>
+
+<p class="sottotitolo">
+SEI ENTRATO NEL LABORATORIO
+</p>
+
+
+<!-- =======================================================
+     ATOMI
+======================================================= -->
+
+<div class="atomi-laboratorio">
+
+
+<div class="atomo-elemento">
+
+<div class="atomo-lab atomo-1">
+
+<div class="nucleo"></div>
+
+<div class="orbita"></div>
+<div class="orbita"></div>
+<div class="orbita"></div>
+
+</div>
+
+<h3 class="nome-atomo">
+[Atomo prototipo Izanami]
+</h3>
+
+</div>
+
+
+<div class="atomo-elemento">
+
+<div class="atomo-lab atomo-2">
+
+<div class="nucleo"></div>
+
+<div class="orbita"></div>
+<div class="orbita"></div>
+<div class="orbita"></div>
+
+</div>
+
+<h3 class="nome-atomo">
+[Atomo Chaos amplify]
+</h3>
+
+</div>
+
+
+<div class="atomo-elemento">
+
+<div class="atomo-lab atomo-3">
+
+<div class="nucleo"></div>
+
+<div class="orbita"></div>
+<div class="orbita"></div>
+<div class="orbita"></div>
+
+</div>
+
+<h3 class="nome-atomo">
+[Atomo abissale predefinito]
+</h3>
+
+</div>
+
+
+<div class="atomo-elemento">
+
+<div class="atomo-lab atomo-4">
+
+<div class="nucleo"></div>
+
+<div class="orbita"></div>
+<div class="orbita"></div>
+<div class="orbita"></div>
+
+</div>
+
+<h3 class="nome-atomo">
+[Atomo prototipo abisso radioattivo]
+[Particella naturale radioattiva atomica]
+</h3>
+
+</div>
+
+
+<div class="atomo-elemento">
+
+<div class="atomo-lab atomo-5">
+
+<div class="nucleo"></div>
+
+<div class="orbita"></div>
+<div class="orbita"></div>
+<div class="orbita"></div>
+
+</div>
+
+<h3 class="nome-atomo">
+[Atomo prototipo Chaos puro]
+</h3>
+
+</div>
+
+
+<div class="atomo-elemento">
+
+<div class="atomo-lab atomo-6">
+
+<div class="nucleo"></div>
+
+<div class="orbita"></div>
+<div class="orbita"></div>
+<div class="orbita"></div>
+
+</div>
+
+<h3 class="nome-atomo">
+[Atomo prototipo 2 serafino]
+</h3>
+
+</div>
+
+
+</div>
+
+
+<!-- =======================================================
+     ARCHIVIO
+======================================================= -->
+
+<section class="archivio-atomi">
+
+<h2>ARCHIVIO ATOMI</h2>
+
+<p class="archivio-sottotitolo">
+Seleziona un campione per analizzarlo.
+</p>
+
+
+<div class="card-atomi">
+
+
+<div class="card-atomo card-viola"
+onclick="mostraAtomo('viola')">
+
+<div class="card-punto"></div>
+
+<h3>ATOMO VIOLA</h3>
+
+<p>Energia misteriosa</p>
+
+<span>SCOPRI →</span>
+
+</div>
+
+
+<div class="card-atomo card-rosso"
+onclick="mostraAtomo('rosso')">
+
+<div class="card-punto"></div>
+
+<h3>ATOMO ROSSO</h3>
+
+<p>Energia distruttiva</p>
+
+<span>SCOPRI →</span>
+
+</div>
+
+
+<div class="card-atomo card-blu"
+onclick="mostraAtomo('blu')">
+
+<div class="card-punto"></div>
+
+<h3>ATOMO BLU</h3>
+
+<p>Energia instabile</p>
+
+<span>SCOPRI →</span>
+
+</div>
+
+
+<div class="card-atomo card-verde"
+onclick="mostraAtomo('verde')">
+
+<div class="card-punto"></div>
+
+<h3>ATOMO VERDE</h3>
+
+<p>Energia vitale</p>
+
+<span>SCOPRI →</span>
+
+</div>
+
+
+<div class="card-atomo card-arancione"
+onclick="mostraAtomo('arancione')">
+
+<div class="card-punto"></div>
+
+<h3>ATOMO ARANCIONE</h3>
+
+<p>Energia incandescente</p>
+
+<span>SCOPRI →</span>
+
+</div>
+
+
+<div class="card-atomo card-rosa"
+onclick="mostraAtomo('rosa')">
+
+<div class="card-punto"></div>
+
+<h3>ATOMO ROSA</h3>
+
+<p>Energia sconosciuta</p>
+
+<span>SCOPRI →</span>
+
+</div>
+
+
+</div>
+
+
+<!-- =======================================================
+     DETTAGLI
+======================================================= -->
+
+<div id="dettagli-atomo"
+class="dettagli-atomo">
+
+
+<button
+class="chiudi-dettagli"
+onclick="chiudiAtomo()">
+
+✕
+
+</button>
+
+
+<div class="dettagli-contenuto">
+
+
+<div id="dettagli-punto"
+class="dettagli-punto">
+</div>
+
+
+<h2 id="dettagli-titolo">
+ATOMO
+</h2>
+
+
+<p id="dettagli-descrizione">
+Seleziona un atomo per iniziare l'analisi.
+</p>
+
+
+<!-- SCANNER -->
+
+<div class="scanner-atomo">
+
+<div
+class="scanner-testo">
+
+SCANNER PRONTO
+
+</div>
+
+
+<div class="scanner-linea">
+
+<div id="scanner-progresso"></div>
+
+</div>
+
+
+<div id="scanner-percentuale">
+0%
+</div>
+
+</div>
+
+
+<!-- STATISTICHE -->
+
+<div class="statistiche-atomo">
+
+
+<div class="statistica">
+
+<div class="statistica-header">
+
+<span>ENERGIA</span>
+
+<strong id="energia-valore">
+0%
+</strong>
+
+</div>
+
+<div class="barra">
+
+<div id="energia-barra"></div>
+
+</div>
+
+</div>
+
+
+<div class="statistica">
+
+<div class="statistica-header">
+
+<span>STABILITÀ</span>
+
+<strong id="stabilita-valore">
+0%
+</strong>
+
+</div>
+
+<div class="barra">
+
+<div id="stabilita-barra"></div>
+
+</div>
+
+</div>
+
+
+<div class="statistica">
+
+<div class="statistica-header">
+
+<span>PERICOLOSITÀ</span>
+
+<strong id="pericolo-valore">
+---
+</strong>
+
+</div>
+
+<div class="barra">
+
+<div id="pericolo-barra"></div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<!-- DATI -->
+
+<div class="dettagli-info">
+
+
+<div>
+
+<span>TIPO</span>
+
+<strong id="dettagli-tipo">
+---
+</strong>
+
+</div>
+
+
+<div>
+
+<span>FREQUENZA</span>
+
+<strong id="dettagli-frequenza">
+---
+</strong>
+
+</div>
+
+
+<div>
+
+<span>MASSA</span>
+
+<strong id="dettagli-massa">
+---
+</strong>
+
+</div>
+
+
+</div>
+
+
+<button
+class="analizza-btn"
+onclick="avviaAnalisi()">
+
+🔬 AVVIA ANALISI
+
+</button>
+
+
+<!-- =====================================================
+     ESPERIMENTO
+===================================================== -->
+
+<div id="esperimento"
+class="esperimento">
+
+
+<h3>
+🧪 MODULO ESPERIMENTALE
+</h3>
+
+
+<p class="esperimento-sottotitolo">
+
+Manipola il campione e osserva la sua
+reazione in tempo reale.
+
+</p>
+
+
+<div class="controlli-esperimento">
+
+
+<div class="controllo-esperimento">
+
+<button onclick="modificaEnergia(10)">
+⚡ +10 ENERGIA
+</button>
+
+</div>
+
+
+<div class="controllo-esperimento">
+
+<button onclick="modificaEnergia(-10)">
+🔻 -10 ENERGIA
+</button>
+
+</div>
+
+
+<div class="controllo-esperimento">
+
+<button onclick="stabilizzaAtomo()">
+🧲 STABILIZZA
+</button>
+
+</div>
+
+
+<div class="controllo-esperimento">
+
+<button onclick="testReazione()">
+☢️ TEST REAZIONE
+</button>
+
+</div>
+
+
+<div class="controllo-esperimento">
+
+<button onclick="sovraccaricaAtomo()">
+💥 SOVRACCARICO
+</button>
+
+</div>
+
+
+<div class="controllo-esperimento">
+
+<button onclick="resetEsperimento()">
+🔄 RESET
+</button>
+
+</div>
+
+
+</div>
+
+
+<!-- LIVE -->
+
+<div class="valori-esperimento">
+
+
+<div class="valore-esperimento">
+
+<span>ENERGIA LIVE</span>
+
+<strong id="energia-live">
+0%
+</strong>
+
+<div class="barra-esperimento">
+
+<div id="energia-live-barra"></div>
+
+</div>
+
+</div>
+
+
+<div class="valore-esperimento">
+
+<span>STABILITÀ LIVE</span>
+
+<strong id="stabilita-live">
+0%
+</strong>
+
+<div class="barra-esperimento">
+
+<div id="stabilita-live-barra"></div>
+
+</div>
+
+</div>
+
+
+<div class="valore-esperimento">
+
+<span>RISCHIO</span>
+
+<strong id="rischio-live">
+0%
+</strong>
+
+<div class="barra-esperimento">
+
+<div id="rischio-live-barra"></div>
+
+</div>
+
+</div>
+
+
+</div>
+
+
+<div
+id="console-esperimento"
+class="console-esperimento">
+
+<span class="verde">
+&gt; SISTEMA SPERIMENTALE PRONTO...
+</span>
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</div>
+
+
+</section>
+
+
+<a
+href="index.html"
+class="torna-indietro">
+
+← TORNA AL SITO
+
+</a>
+
+
+</main>
+
+
+<script>
+
+/* =========================================================
+   DATI ATOMI
+========================================================= */
+
+const datiAtomi = {
+
+    viola:{
+        titolo:"ATOMO VIOLA",
+        colore:"#8a2be2",
+        descrizione:
+        "Atomo prototipo Izanami. Un campione misterioso con una struttura energetica estremamente particolare.",
+        tipo:"IZANAMI",
+        energia:84,
+        stabilita:72,
+        pericolo:"MEDIO",
+        pericoloValore:55,
+        frequenza:"783 Hz",
+        massa:"0.00043"
+    },
+
+    rosso:{
+        titolo:"ATOMO ROSSO",
+        colore:"#ff0000",
+        descrizione:
+        "Atomo Chaos amplify. La sua energia aumenta rapidamente quando viene sottoposto a pressione.",
+        tipo:"CHAOS AMPLIFY",
+        energia:96,
+        stabilita:31,
+        pericolo:"ESTREMO",
+        pericoloValore:98,
+        frequenza:"1240 Hz",
+        massa:"0.00091"
+    },
+
+    blu:{
+        titolo:"ATOMO BLU",
+        colore:"#008cff",
+        descrizione:
+        "Atomo abissale predefinito. La sua struttura presenta particelle in continuo movimento.",
+        tipo:"ABISSALE",
+        energia:76,
+        stabilita:46,
+        pericolo:"ALTO",
+        pericoloValore:78,
+        frequenza:"921 Hz",
+        massa:"0.00058"
+    },
+
+    verde:{
+        titolo:"ATOMO VERDE",
+        colore:"#00ff66",
+        descrizione:
+        "Atomo prototipo abisso radioattivo. Contiene una particella naturale radioattiva atomica.",
+        tipo:"RADIOATTIVO",
+        energia:61,
+        stabilita:94,
+        pericolo:"BASSO",
+        pericoloValore:25,
+        frequenza:"432 Hz",
+        massa:"0.00037"
+    },
+
+    arancione:{
+        titolo:"ATOMO ARANCIONE",
+        colore:"#ff6a00",
+        descrizione:
+        "Atomo prototipo Chaos puro. Una concentrazione energetica estremamente elevata.",
+        tipo:"CHAOS PURO",
+        energia:91,
+        stabilita:54,
+        pericolo:"ALTO",
+        pericoloValore:82,
+        frequenza:"1108 Hz",
+        massa:"0.00076"
+    },
+
+    rosa:{
+        titolo:"ATOMO ROSA",
+        colore:"#ff00aa",
+        descrizione:
+        "Atomo prototipo 2 serafino. Il campione più enigmatico attualmente presente nel laboratorio.",
+        tipo:"SERAFINO",
+        energia:100,
+        stabilita:17,
+        pericolo:"???",
+        pericoloValore:100,
+        frequenza:"??? Hz",
+        massa:"0.00102"
+    }
+
+};
+
+
+/* =========================================================
+   VARIABILI
+========================================================= */
+
+let atomoSelezionato=null;
+
+let analisiInCorso=false;
+
+let timerAnalisi=null;
+
+let energiaEsperimento=0;
+
+let stabilitaEsperimento=0;
+
+let rischioEsperimento=0;
+
+
+/* =========================================================
+   STELLE
+========================================================= */
+
+function creaStella(){
+
+    const stella=
+        document.createElement("div");
+
+    stella.className="stella";
+
+
+    const dimensione=
+        Math.random()*3+1;
+
+    const durata=
+        Math.random()*5+4;
+
+    const posizione=
+        Math.random()*100;
+
+    const movimento=
+        (Math.random()*160-80)+"px";
+
+
+    stella.style.width=
+        dimensione+"px";
+
+    stella.style.height=
+        dimensione+"px";
+
+    stella.style.left=
+        posizione+"%";
+
+    stella.style.setProperty(
+        "--movimento",
+        movimento
+    );
+
+    stella.style.animationDuration=
+        durata+"s";
+
+
+    document.body.appendChild(stella);
+
+
+    setTimeout(()=>{
+
+        stella.remove();
+
+    },durata*1000+500);
+
+}
+
+
+/* stelle iniziali */
+
+for(let i=0;i<35;i++){
+
+    setTimeout(
+        creaStella,
+        Math.random()*5000
+    );
+
+}
+
+
+/* stelle continue */
+
+setInterval(
+    creaStella,
+    180
+);
+
+
+/* =========================================================
+   BUCHI NERI CASUALI
+========================================================= */
+
+function creaBucoNero(){
+
+    const buco=
+        document.createElement("div");
+
+    buco.className=
+        "buco-nero";
+
+
+    /* 65% piccoli
+       35% medi */
+
+    const dimensione=
+        Math.random()<.65
+        ?
+        Math.random()*70+50
+        :
+        Math.random()*100+100;
+
+
+    buco.style.setProperty(
+        "--dimensione",
+        dimensione+"px"
+    );
+
+
+    buco.style.left=
+        Math.random()*92+"%";
+
+
+    buco.style.top=
+        Math.random()*85+"%";
+
+
+    document.body.appendChild(buco);
+
+
+    setTimeout(()=>{
+
+        buco.remove();
+
+    },8000);
+
+}
+
+
+/* non troppo frequenti */
+
+setInterval(()=>{
+
+    if(Math.random()<.38){
+
+        creaBucoNero();
+
+    }
+
+},4500);
+
+
+/* =========================================================
+   MOSTRA ATOMO
+========================================================= */
+
+function mostraAtomo(nome){
+
+    const atomo=
+        datiAtomi[nome];
+
+    if(!atomo){
+
+        return;
+    }
+
+
+    atomoSelezionato=
+        nome;
+
+
+    const dettagli=
+        document.getElementById(
+            "dettagli-atomo"
+        );
+
+
+    dettagli.style.setProperty(
+        "--dettaglio-colore",
+        atomo.colore
+    );
+
+
+    document.getElementById(
+        "dettagli-punto"
+    ).style.background=
+        atomo.colore;
+
+
+    document.getElementById(
+        "dettagli-punto"
+    ).style.boxShadow=
+        "0 0 25px "+atomo.colore;
+
+
+    document.getElementById(
+        "dettagli-titolo"
+    ).textContent=
+        atomo.titolo;
+
+
+    document.getElementById(
+        "dettagli-descrizione"
+    ).textContent=
+        atomo.descrizione;
+
+
+    document.getElementById(
+        "dettagli-tipo"
+    ).textContent=
+        atomo.tipo;
+
+
+    document.getElementById(
+        "dettagli-frequenza"
+    ).textContent=
+        atomo.frequenza;
+
+
+    document.getElementById(
+        "dettagli-massa"
+    ).textContent=
+        atomo.massa;
+
+
+    document.getElementById(
+        "energia-valore"
+    ).textContent=
+        atomo.energia+"%";
+
+
+    document.getElementById(
+        "stabilita-valore"
+    ).textContent=
+        atomo.stabilita+"%";
+
+
+    document.getElementById(
+        "pericolo-valore"
+    ).textContent=
+        atomo.pericolo;
+
+
+    document.getElementById(
+        "energia-barra"
+    ).style.width=
+        atomo.energia+"%";
+
+
+    document.getElementById(
+        "stabilita-barra"
+    ).style.width=
+        atomo.stabilita+"%";
+
+
+    document.getElementById(
+        "pericolo-barra"
+    ).style.width=
+        atomo.pericoloValore+"%";
+
+
+    /* reset scanner */
+
+    if(timerAnalisi){
+
+        clearInterval(
+            timerAnalisi
+        );
+
+        timerAnalisi=null;
+
+    }
+
+
+    analisiInCorso=false;
+
+
+    document.getElementById(
+        "scanner-progresso"
+    ).style.width="0%";
+
+
+    document.getElementById(
+        "scanner-percentuale"
+    ).textContent="0%";
+
+
+    document.querySelector(
+        ".scanner-testo"
+    ).textContent=
+        "SCANNER PRONTO";
+
+
+    /* reset esperimento */
+
+    energiaEsperimento=
+        atomo.energia;
+
+    stabilitaEsperimento=
+        atomo.stabilita;
+
+    rischioEsperimento=
+        atomo.pericoloValore;
+
+
+    aggiornaEsperimento();
+
+
+    document.getElementById(
+        "esperimento"
+    ).classList.remove(
+        "attivo"
+    );
+
+
+    dettagli.classList.add(
+        "aperto"
+    );
+
+
+    setTimeout(()=>{
+
+        dettagli.scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"center"
+
+        });
+
+    },150);
+
+}
+
+
+/* =========================================================
+   ANALISI
+========================================================= */
+
+function avviaAnalisi(){
+
+    if(!atomoSelezionato){
+
+        alert(
+            "Seleziona prima un atomo!"
+        );
+
+        return;
+    }
+
+
+    if(analisiInCorso){
+
+        return;
+    }
+
+
+    const atomo=
+        datiAtomi[
+            atomoSelezionato
+        ];
+
+
+    const barra=
+        document.getElementById(
+            "scanner-progresso"
+        );
+
+
+    const percentuale=
+        document.getElementById(
+            "scanner-percentuale"
+        );
+
+
+    const testo=
+        document.querySelector(
+            ".scanner-testo"
+        );
+
+
+    analisiInCorso=true;
+
+
+    let valore=0;
+
+
+    barra.style.width="0%";
+
+    percentuale.textContent="0%";
+
+    testo.textContent=
+        "INIZIALIZZAZIONE SCANNER...";
+
+
+    const indice=
+        Object.keys(datiAtomi)
+        .indexOf(atomoSelezionato)+1;
+
+
+    const grafico=
+        document.querySelector(
+            ".atomo-"+indice
+        );
+
+
+    if(grafico){
+
+        grafico.style.filter=
+            "drop-shadow(0 0 30px "+
+            atomo.colore+
+            ")";
+
+    }
+
+
+    const messaggi=[
+
+        [5,"CONNESSIONE AL LABORATORIO..."],
+
+        [15,"RICERCA PARTICELLE..."],
+
+        [30,"RILEVAMENTO NUCLEO..."],
+
+        [45,"ANALISI STRUTTURA ATOMICA..."],
+
+        [60,"MISURAZIONE ENERGIA..."],
+
+        [72,"CALCOLO STABILITÀ..."],
+
+        [84,"VERIFICA PERICOLOSITÀ..."],
+
+        [93,"RICERCA ANOMALIE..."],
+
+        [98,"FINALIZZAZIONE DATI..."]
+
+    ];
+
+
+    timerAnalisi=
+        setInterval(()=>{
+
+            valore++;
+
+
+            barra.style.width=
+                valore+"%";
+
+
+            percentuale.textContent=
+                valore+"%";
+
+
+            for(
+                let i=messaggi.length-1;
+                i>=0;
+                i--
+            ){
+
+                if(
+                    valore>=messaggi[i][0]
+                ){
+
+                    testo.textContent=
+                        messaggi[i][1];
+
+                    break;
+
+                }
+
+            }
+
+
+            if(
+                valore===63 &&
+                (
+                    atomoSelezionato==="rosso" ||
+                    atomoSelezionato==="rosa"
+                )
+            ){
+
+                testo.textContent=
+                    "⚠ ANOMALIA ENERGETICA RILEVATA";
+
+            }
+
+
+            if(
+                valore===87 &&
+                (
+                    atomoSelezionato==="blu"
+                )
+            ){
+
+                testo.textContent=
+                    "⚠ PARTICELLA INSTABILE RILEVATA";
+
+            }
+
+
+            if(valore>=100){
+
+                clearInterval(
+                    timerAnalisi
+                );
+
+                timerAnalisi=null;
+
+                analisiInCorso=false;
+
+
+                testo.textContent=
+                    "✓ ANALISI COMPLETATA";
+
+
+                barra.style.width="100%";
+
+                percentuale.textContent=
+                    "100%";
+
+
+                if(grafico){
+
+                    grafico.style.transform=
+                        "scale(1.25)";
+
+
+                    setTimeout(()=>{
+
+                        grafico.style.transform=
+                            "";
+
+                        grafico.style.filter=
+                            "";
+
+                    },500);
+
+                }
+
+
+                document.getElementById(
+                    "esperimento"
+                ).classList.add(
+                    "attivo"
+                );
+
+
+                setTimeout(()=>{
+
+                    document.getElementById(
+                        "esperimento"
+                    ).scrollIntoView({
+
+                        behavior:"smooth",
+
+                        block:"center"
+
+                    });
+
+                },400);
+
+            }
+
+        },30);
+
+}
+
+
+/* =========================================================
+   AGGIORNA ESPERIMENTO
+========================================================= */
+
+function aggiornaEsperimento(){
+
+    energiaEsperimento=
+        Math.max(
+            0,
+            Math.min(
+                100,
+                energiaEsperimento
+            )
+        );
+
+
+    stabilitaEsperimento=
+        Math.max(
+            0,
+            Math.min(
+                100,
+                stabilitaEsperimento
+            )
+        );
+
+
+    rischioEsperimento=
+        Math.max(
+            0,
+            Math.min(
+                100,
+                rischioEsperimento
+            )
+        );
+
+
+    document.getElementById(
+        "energia-live"
+    ).textContent=
+        Math.round(
+            energiaEsperimento
+        )+"%";
+
+
+    document.getElementById(
+        "stabilita-live"
+    ).textContent=
+        Math.round(
+            stabilitaEsperimento
+        )+"%";
+
+
+    document.getElementById(
+        "rischio-live"
+    ).textContent=
+        Math.round(
+            rischioEsperimento
+        )+"%";
+
+
+    document.getElementById(
+        "energia-live-barra"
+    ).style.width=
+        energiaEsperimento+"%";
+
+
+    document.getElementById(
+        "stabilita-live-barra"
+    ).style.width=
+        stabilitaEsperimento+"%";
+
+
+    document.getElementById(
+        "rischio-live-barra"
+    ).style.width=
+        rischioEsperimento+"%";
+
+
+    controllaPericolo();
+
+}
+
+
+/* =========================================================
+   ENERGIA
+========================================================= */
+
+function modificaEnergia(valore){
+
+    if(!atomoSelezionato){
+
+        return;
+    }
+
+
+    energiaEsperimento+=
+        valore;
+
+
+    if(valore>0){
+
+        stabilitaEsperimento-=
+            Math.abs(valore)*.35;
+
+        rischioEsperimento+=
+            Math.abs(valore)*.4;
+
+
+        scriviConsole(
+            "⚡ Energia aumentata.",
+            "giallo"
+        );
+
+    }
+
+    else{
+
+        stabilitaEsperimento+=3;
+
+        rischioEsperimento-=2;
+
+
+        scriviConsole(
+            "🔻 Energia ridotta.",
+            "verde"
+        );
+
+    }
+
+
+    aggiornaEsperimento();
+
+    reazioneAtomo();
+
+}
+
+
+/* =========================================================
+   STABILIZZA
+========================================================= */
+
+function stabilizzaAtomo(){
+
+    if(!atomoSelezionato){
+
+        return;
+    }
+
+
+    stabilitaEsperimento+=12;
+
+    energiaEsperimento-=3;
+
+    rischioEsperimento-=15;
+
+
+    scriviConsole(
+        "🧲 Stabilizzatore magnetico attivato.",
+        "verde"
+    );
+
+
+    aggiornaEsperimento();
+
+    reazioneAtomo();
+
+}
+
+
+/* =========================================================
+   TEST
+========================================================= */
+
+function testReazione(){
+
+    if(!atomoSelezionato){
+
+        return;
+    }
+
+
+    const reazioni={
+
+        viola:
+        "Il nucleo viola ha reagito alle frequenze esterne.",
+
+        rosso:
+        "⚠ Il nucleo rosso ha prodotto una forte espansione energetica.",
+
+        blu:
+        "Il campione blu ha modificato temporaneamente la propria struttura.",
+
+        verde:
+        "Il campione verde ha mostrato una risposta rigenerativa.",
+
+        arancione:
+        "🔥 Temperatura energetica in rapido aumento.",
+
+        rosa:
+        "⚠ Il Serafino ha generato una frequenza sconosciuta."
+
+    };
+
+
+    energiaEsperimento+=
+        Math.random()*8-3;
+
+
+    stabilitaEsperimento+=
+        Math.random()*8-5;
+
+
+    rischioEsperimento+=
+        Math.random()*12-4;
+
+
+    const testo=
+        reazioni[
+            atomoSelezionato
+        ];
+
+
+    const classe=
+        (
+            atomoSelezionato==="rosa" ||
+            atomoSelezionato==="rosso"
+        )
+        ?
+        "rosso"
+        :
+        "giallo";
+
+
+    scriviConsole(
+        "☢️ "+testo,
+        classe
+    );
+
+
+    aggiornaEsperimento();
+
+    reazioneAtomo();
+
+}
+
+
+/* =========================================================
+   SOVRACCARICO
+========================================================= */
+
+function sovraccaricaAtomo(){
+
+    if(!atomoSelezionato){
+
+        return;
+    }
+
+
+    energiaEsperimento=100;
+
+    stabilitaEsperimento=5;
+
+    rischioEsperimento=100;
+
+
+    scriviConsole(
+        "💥 SOVRACCARICO DEL NUCLEO! SISTEMA INSTABILE!",
+        "rosso"
+    );
+
+
+    aggiornaEsperimento();
+
+
+    const indice=
+        Object.keys(datiAtomi)
+        .indexOf(atomoSelezionato)+1;
+
+
+    const grafico=
+        document.querySelector(
+            ".atomo-"+indice
+        );
+
+
+    if(grafico){
+
+        grafico.classList.add(
+            "nucleo-sovraccarico"
+        );
+
+
+        setTimeout(()=>{
+
+            grafico.classList.remove(
+                "nucleo-sovraccarico"
+            );
+
+        },4000);
+
+    }
+
+
+    const esperimento=
+        document.getElementById(
+            "esperimento"
+        );
+
+
+    esperimento.classList.add(
+        "esperimento-pericoloso"
+    );
+
+
+    setTimeout(()=>{
+
+        esperimento.classList.remove(
+            "esperimento-pericoloso"
+        );
+
+    },5000);
+
+}
+
+
+/* =========================================================
+   RESET
+========================================================= */
+
+function resetEsperimento(){
+
+    if(!atomoSelezionato){
+
+        return;
+    }
+
+
+    const atomo=
+        datiAtomi[
+            atomoSelezionato
+        ];
+
+
+    energiaEsperimento=
+        atomo.energia;
+
+
+    stabilitaEsperimento=
+        atomo.stabilita;
+
+
+    rischioEsperimento=
+        atomo.pericoloValore;
+
+
+    scriviConsole(
+        "🔄 Parametri ripristinati ai valori originali.",
+        "verde"
+    );
+
+
+    aggiornaEsperimento();
+
+}
+
+
+/* =========================================================
+   REAZIONE GRAFICA
+========================================================= */
+
+function reazioneAtomo(){
+
+    const indice=
+        Object.keys(datiAtomi)
+        .indexOf(atomoSelezionato)+1;
+
+
+    const grafico=
+        document.querySelector(
+            ".atomo-"+indice
+        );
+
+
+    if(!grafico){
+
+        return;
+    }
+
+
+    const intensita=
+        1+
+        energiaEsperimento/500;
+
+
+    grafico.style.transform=
+        "scale("+intensita+")";
+
+
+    setTimeout(()=>{
+
+        grafico.style.transform="";
+
+    },300);
+
+
+    if(
+        rischioEsperimento>=85
+    ){
+
+        grafico.style.filter=
+            "brightness(1.8) drop-shadow(0 0 40px "+
+            dadosCor()+
+            ")";
+
+    }
+
+}
+
+
+/* =========================================================
+   COLORE CORRENTE
+========================================================= */
+
+function dadosCor(){
+
+    if(!atomoSelezionato){
+
+        return "#8a2be2";
+    }
+
+    return dadosAtomoSafe().colore;
+
+}
+
+
+function dadosAtomoSafe(){
+
+    return dadosAtomi[
+        atomoSelezionato
+    ];
+
+}
+
+
+/* =========================================================
+   CONTROLLO PERICOLO
+========================================================= */
+
+function controllaPericolo(){
+
+    const consoleLab=
+        document.getElementById(
+            "console-esperimento"
+        );
+
+
+    if(
+        riscoValore()>=90
+    ){
+
+        consoleLab.innerHTML=
+            '<span class="rosso">'+
+            '&gt; ⚠ PERICOLO CRITICO: NUCLEO INSTABILE'+
+            '</span>';
+
+    }
+
+    else if(
+        riscoValore()>=70
+    ){
+
+        consoleLab.innerHTML=
+            '<span class="giallo">'+
+            '&gt; ⚠ LIVELLO DI RISCHIO ELEVATO'+
+            '</span>';
+
+    }
+
+}
+
+
+/* =========================================================
+   RISCHIO
+========================================================= */
+
+function riscoValore(){
+
+    return Math.max(
+        0,
+        Math.min(
+            100,
+            riscoNumero()
+        )
+    );
+
+}
+
+
+function riscoNumero(){
+
+    return rischioEsperimento;
+
+}
+
+
+/* =========================================================
+   CONSOLE
+========================================================= */
+
+function scriviConsole(
+    testo,
+    classe
+){
+
+    const consoleLab=
+        document.getElementById(
+            "console-esperimento"
+        );
+
+
+    consoleLab.innerHTML=
+        '<span class="'+
+        classe+
+        '">'+
+        "&gt; "+
+        testo+
+        "</span>";
+
+}
+
+
+/* =========================================================
+   CHIUDI
+========================================================= */
+
+function chiudiAtomo(){
+
+    const dettagli=
+        document.getElementById(
+            "dettagli-atomo"
+        );
+
+
+    dettagli.classList.remove(
+        "aperto"
+    );
+
+
+    if(timerAnalisi){
+
+        clearInterval(
+            timerAnalisi
+        );
+
+        timerAnalisi=null;
+
+    }
+
+
+    analisiInCorso=false;
+
+}
+
+
+/* =========================================================
+   LOG
+========================================================= */
+
+console.log(
+    "SILENT SCREAM LABORATORIO ONLINE"
+);
+
+console.log(
+    "Sistema stelle: ONLINE"
+);
+
+console.log(
+    "Sistema buchi neri: ONLINE"
+);
+
+console.log(
+    "6 campioni atomici caricati"
+);
+
+</script>
+
+
+</body>
+
+</html>

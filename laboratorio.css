@@ -1,0 +1,880 @@
+:root {
+    --viola: #8a2be2;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background: #050008;
+
+    color: white;
+
+    font-family: Arial, sans-serif;
+
+    overflow-x: hidden;
+}
+
+.sfondo {
+    position: fixed;
+    inset: 0;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(138, 43, 226, 0.12),
+            transparent 60%
+        );
+
+    pointer-events: none;
+}
+
+.laboratorio {
+    position: relative;
+
+    width: 90%;
+    max-width: 1200px;
+
+    margin: auto;
+    padding: 70px 20px;
+
+    text-align: center;
+}
+
+.laboratorio h1 {
+    margin: 0;
+
+    font-size: 48px;
+    letter-spacing: 6px;
+
+    text-shadow:
+        0 0 10px var(--viola),
+        0 0 30px var(--viola),
+        0 0 60px var(--viola);
+}
+
+.sottotitolo {
+    color: #ccc;
+
+    font-size: 18px;
+
+    margin-top: 15px;
+    margin-bottom: 70px;
+}
+
+.atomi-laboratorio {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 70px 50px;
+
+    justify-items: center;
+}
+
+.atomo-lab {
+    position: relative;
+
+    width: 200px;
+    height: 200px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.atomo-lab:hover {
+    transform: scale(1.1);
+}
+
+/* NUCLEO */
+
+.nucleo {
+    position: absolute;
+
+    width: 45px;
+    height: 45px;
+
+    border-radius: 50%;
+
+    background: var(--colore-atomo);
+
+    box-shadow:
+        0 0 10px var(--colore-atomo),
+        0 0 25px var(--colore-atomo),
+        0 0 55px var(--colore-atomo);
+
+    animation: pulsazione 1.5s ease-in-out infinite alternate;
+}
+
+/* ORBITE */
+
+.orbita {
+    position: absolute;
+
+    width: 175px;
+    height: 70px;
+
+    border: 2px solid var(--colore-atomo);
+
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 8px var(--colore-atomo),
+        0 0 18px var(--colore-atomo);
+
+    animation: rotazione 3s linear infinite;
+}
+
+.atomo-lab .orbita:nth-child(3) {
+    transform: rotate(60deg);
+
+    animation-duration: 3.5s;
+}
+
+.atomo-lab .orbita:nth-child(4) {
+    transform: rotate(-60deg);
+
+    animation-duration: 4s;
+}
+
+/* COLORI */
+
+.atomo-1 {
+    --colore-atomo: #8a2be2;
+}
+
+.atomo-2 {
+    --colore-atomo: #ff0000;
+}
+
+.atomo-3 {
+    --colore-atomo: #008cff;
+}
+
+.atomo-4 {
+    --colore-atomo: #00ff66;
+}
+
+.atomo-5 {
+    --colore-atomo: #ff6a00;
+}
+
+.atomo-6 {
+    --colore-atomo: #ff00aa;
+}
+
+/* ANIMAZIONI */
+
+@keyframes rotazione {
+
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+
+}
+
+@keyframes pulsazione {
+
+    from {
+        transform: scale(0.9);
+    }
+
+    to {
+        transform: scale(1.1);
+    }
+
+}
+
+/* PULSANTE */
+
+.torna-indietro {
+    display: inline-block;
+
+    margin-top: 80px;
+
+    padding: 13px 25px;
+
+    color: white;
+
+    text-decoration: none;
+
+    background: #18002b;
+
+    border: 2px solid var(--viola);
+
+    border-radius: 10px;
+
+    box-shadow:
+        0 0 10px var(--viola),
+        0 0 25px rgba(138, 43, 226, 0.5);
+
+    transition: 0.3s ease;
+}
+
+.torna-indietro:hover {
+    background: var(--viola);
+
+    box-shadow:
+        0 0 15px var(--viola),
+        0 0 35px var(--viola);
+}
+
+/* TELEFONO */
+
+@media (max-width: 600px) {
+
+    .laboratorio {
+        width: 95%;
+        padding: 45px 10px;
+    }
+
+    .laboratorio h1 {
+        font-size: 32px;
+        letter-spacing: 3px;
+    }
+
+    .sottotitolo {
+        font-size: 15px;
+        margin-bottom: 45px;
+    }
+
+    .atomi-laboratorio {
+        grid-template-columns: repeat(2, 1fr);
+
+        gap: 45px 5px;
+    }
+
+    .atomo-lab {
+        width: 140px;
+        height: 140px;
+    }
+
+    .orbita {
+        width: 120px;
+        height: 50px;
+    }
+
+    .nucleo {
+        width: 32px;
+        height: 32px;
+    }
+
+    .torna-indietro {
+        margin-top: 60px;
+    }
+
+}
+```css id="p3q7vx"
+/* =========================
+   ARCHIVIO ATOMI
+========================= */
+
+.archivio-atomi {
+    margin-top: 150px;
+    padding-top: 70px;
+
+    border-top: 1px solid rgba(138, 43, 226, 0.3);
+}
+
+.archivio-atomi h2 {
+    margin: 0;
+
+    color: white;
+
+    font-size: 38px;
+    letter-spacing: 4px;
+
+    text-shadow:
+        0 0 10px #8a2be2,
+        0 0 25px #8a2be2;
+}
+
+.archivio-sottotitolo {
+    color: #aaa;
+
+    margin-top: 12px;
+    margin-bottom: 45px;
+}
+
+
+/* GRIGLIA */
+
+.card-atomi {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 25px;
+
+    max-width: 1000px;
+
+    margin: auto;
+}
+
+
+/* CARD */
+
+.card-atomo {
+    position: relative;
+
+    padding: 30px 25px;
+
+    min-height: 180px;
+
+    background: rgba(10, 0, 20, 0.9);
+
+    border: 1px solid var(--colore-card);
+
+    border-radius: 16px;
+
+    text-align: left;
+
+    cursor: pointer;
+
+    overflow: hidden;
+
+    transition:
+        transform 0.3s ease,
+        box-shadow 0.3s ease,
+        background 0.3s ease;
+}
+
+
+/* LUCE */
+
+.card-atomo::before {
+    content: "";
+
+    position: absolute;
+
+    width: 120px;
+    height: 120px;
+
+    top: -50px;
+    right: -40px;
+
+    background: var(--colore-card);
+
+    border-radius: 50%;
+
+    filter: blur(45px);
+
+    opacity: 0.15;
+
+    transition: 0.3s ease;
+}
+
+
+/* PUNTINO */
+
+.card-punto {
+    width: 12px;
+    height: 12px;
+
+    border-radius: 50%;
+
+    background: var(--colore-card);
+
+    box-shadow:
+        0 0 10px var(--colore-card),
+        0 0 25px var(--colore-card);
+
+    margin-bottom: 20px;
+}
+
+
+/* TESTI */
+
+.card-atomo h3 {
+    margin: 0 0 10px;
+
+    color: var(--colore-card);
+
+    font-size: 20px;
+
+    text-shadow:
+        0 0 8px var(--colore-card);
+}
+
+.card-atomo p {
+    margin: 0;
+
+    color: #aaa;
+
+    font-size: 14px;
+}
+
+.card-atomo span {
+    display: block;
+
+    margin-top: 25px;
+
+    color: white;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+}
+
+
+/* HOVER */
+
+.card-atomo:hover {
+    transform: translateY(-10px) scale(1.02);
+
+    background: rgba(20, 0, 35, 0.95);
+
+    box-shadow:
+        0 0 15px var(--colore-card),
+        0 0 35px color-mix(
+            in srgb,
+            var(--colore-card),
+            transparent 55%
+        );
+}
+
+.card-atomo:hover::before {
+    opacity: 0.3;
+
+    transform: scale(1.5);
+}
+
+
+/* COLORI */
+
+.card-viola {
+    --colore-card: #8a2be2;
+}
+
+.card-rosso {
+    --colore-card: #ff0000;
+}
+
+.card-blu {
+    --colore-card: #008cff;
+}
+
+.card-verde {
+    --colore-card: #00ff66;
+}
+
+.card-arancione {
+    --colore-card: #ff6a00;
+}
+
+.card-rosa {
+    --colore-card: #ff00aa;
+}
+
+
+/* TELEFONO */
+
+@media (max-width: 600px) {
+
+    .archivio-atomi {
+        margin-top: 100px;
+        padding-top: 50px;
+    }
+
+    .archivio-atomi h2 {
+        font-size: 28px;
+        letter-spacing: 2px;
+    }
+
+    .archivio-sottotitolo {
+        font-size: 14px;
+        margin-bottom: 30px;
+    }
+
+    .card-atomi {
+        grid-template-columns: 1fr;
+
+        gap: 18px;
+
+        width: 95%;
+    }
+
+    .card-atomo {
+        min-height: 160px;
+
+        padding: 25px 20px;
+    }
+
+}
+```
+```css
+/* =========================
+   DETTAGLI ATOMO
+========================= */
+
+.dettagli-atomo {
+    position: relative;
+
+    max-width: 900px;
+
+    margin: 50px auto 0;
+
+    padding: 40px;
+
+    background: rgba(8, 0, 15, 0.95);
+
+    border: 1px solid #8a2be2;
+
+    border-radius: 20px;
+
+    box-shadow:
+        0 0 20px rgba(138, 43, 226, 0.3),
+        inset 0 0 30px rgba(138, 43, 226, 0.08);
+
+    opacity: 0;
+
+    visibility: hidden;
+
+    transform: translateY(25px) scale(0.98);
+
+    transition:
+        opacity 0.4s ease,
+        transform 0.4s ease,
+        visibility 0.4s ease;
+}
+
+.dettagli-atomo.aperto {
+    opacity: 1;
+
+    visibility: visible;
+
+    transform: translateY(0) scale(1);
+}
+
+
+/* CHIUDI */
+
+.chiudi-dettagli {
+    position: absolute;
+
+    top: 15px;
+    right: 15px;
+
+    width: 35px;
+    height: 35px;
+
+    color: white;
+
+    background: #18002b;
+
+    border: 1px solid #8a2be2;
+
+    border-radius: 50%;
+
+    cursor: pointer;
+
+    transition: 0.3s ease;
+}
+
+.chiudi-dettagli:hover {
+    background: #8a2be2;
+
+    transform: rotate(90deg);
+}
+
+
+/* CONTENUTO */
+
+.dettagli-contenuto {
+    text-align: center;
+}
+
+.dettagli-punto {
+    width: 35px;
+    height: 35px;
+
+    margin: 0 auto 20px;
+
+    border-radius: 50%;
+
+    background: var(--dettaglio-colore);
+
+    box-shadow:
+        0 0 15px var(--dettaglio-colore),
+        0 0 40px var(--dettaglio-colore);
+
+    animation: pulsazione 1.5s ease-in-out infinite alternate;
+}
+
+.dettagli-contenuto h2 {
+    margin-bottom: 15px;
+
+    color: var(--dettaglio-colore);
+
+    font-size: 30px;
+
+    text-shadow:
+        0 0 10px var(--dettaglio-colore),
+        0 0 25px var(--dettaglio-colore);
+}
+
+.dettagli-contenuto > p {
+    max-width: 700px;
+
+    margin: auto;
+
+    color: #ccc;
+
+    line-height: 1.7;
+}
+
+
+/* INFORMAZIONI */
+
+.dettagli-info {
+    display: grid;
+
+    grid-template-columns: repeat(3, 1fr);
+
+    gap: 15px;
+
+    margin-top: 30px;
+}
+
+.dettagli-info div {
+    padding: 18px;
+
+    background: rgba(20, 0, 35, 0.8);
+
+    border: 1px solid rgba(138, 43, 226, 0.3);
+
+    border-radius: 10px;
+}
+
+.dettagli-info span {
+    display: block;
+
+    color: #888;
+
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    margin-bottom: 8px;
+}
+
+.dettagli-info strong {
+    color: white;
+
+    font-size: 15px;
+}
+
+
+/* TELEFONO */
+
+@media (max-width: 600px) {
+
+    .dettagli-atomo {
+        width: 95%;
+
+        padding: 35px 20px;
+    }
+
+    .dettagli-contenuto h2 {
+        font-size: 24px;
+    }
+
+    .dettagli-info {
+        grid-template-columns: 1fr;
+
+        gap: 10px;
+    }
+
+}
+```
+```css
+/* =========================
+   SCANNER
+========================= */
+
+.scanner-atomo {
+    margin: 35px auto;
+
+    max-width: 650px;
+
+    padding: 20px;
+
+    background: rgba(0, 0, 0, 0.35);
+
+    border: 1px solid rgba(138, 43, 226, 0.4);
+
+    border-radius: 10px;
+}
+
+.scanner-testo {
+    color: #8a2be2;
+
+    font-size: 12px;
+
+    letter-spacing: 3px;
+
+    margin-bottom: 12px;
+}
+
+.scanner-linea {
+    width: 100%;
+    height: 5px;
+
+    background: #18002b;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+#scanner-progresso {
+    width: 0%;
+
+    height: 100%;
+
+    background: var(--dettaglio-colore);
+
+    box-shadow:
+        0 0 10px var(--dettaglio-colore),
+        0 0 25px var(--dettaglio-colore);
+
+    transition: width 0.1s linear;
+}
+
+#scanner-percentuale {
+    margin-top: 10px;
+
+    color: white;
+
+    font-size: 13px;
+}
+
+
+/* =========================
+   STATISTICHE
+========================= */
+
+.statistiche-atomo {
+    display: grid;
+
+    gap: 18px;
+
+    max-width: 650px;
+
+    margin: 30px auto;
+}
+
+.statistica {
+    text-align: left;
+}
+
+.statistica-header {
+    display: flex;
+
+    justify-content: space-between;
+
+    margin-bottom: 7px;
+}
+
+.statistica-header span {
+    color: #aaa;
+
+    font-size: 12px;
+
+    letter-spacing: 2px;
+}
+
+.statistica-header strong {
+    color: var(--dettaglio-colore);
+
+    font-size: 13px;
+}
+
+.barra {
+    width: 100%;
+    height: 7px;
+
+    background: #18002b;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+}
+
+.barra div {
+    width: 0%;
+
+    height: 100%;
+
+    background: var(--dettaglio-colore);
+
+    box-shadow:
+        0 0 8px var(--dettaglio-colore),
+        0 0 20px var(--dettaglio-colore);
+
+    transition: width 1s ease;
+}
+
+
+/* =========================
+   ANALIZZA
+========================= */
+
+.analizza-btn {
+    margin-top: 35px;
+
+    padding: 14px 30px;
+
+    color: white;
+
+    background: #18002b;
+
+    border: 1px solid var(--dettaglio-colore);
+
+    border-radius: 10px;
+
+    cursor: pointer;
+
+    letter-spacing: 2px;
+
+    transition: 0.3s ease;
+}
+
+.analizza-btn:hover {
+    background: var(--dettaglio-colore);
+
+    box-shadow:
+        0 0 15px var(--dettaglio-colore),
+        0 0 35px var(--dettaglio-colore);
+
+    transform: translateY(-3px);
+}
+
+
+/* TELEFONO */
+
+@media (max-width: 600px) {
+
+    .scanner-atomo {
+        padding: 15px;
+    }
+
+    .analizza-btn {
+        width: 100%;
+    }
+
+}
+```

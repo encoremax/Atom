@@ -1,0 +1,4946 @@
+<!DOCTYPE html>
+<html lang="it">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+>
+
+<meta
+    name="theme-color"
+    content="#050008"
+>
+
+<title>SILENT SCREAM RP</title>
+
+<style>
+
+/* =========================================================
+   SILENT SCREAM RP
+   HOME COMPLETA
+   VERSIONE MOBILE / DESKTOP
+========================================================= */
+
+:root{
+
+    --bg:#030006;
+    --bg2:#08000f;
+    --panel:rgba(12,4,22,.78);
+
+    --purple:#9b3cff;
+    --purple2:#d06cff;
+
+    --red:#ff1744;
+    --blue:#009dff;
+    --green:#00ff88;
+    --orange:#ff6a00;
+    --pink:#ff22b8;
+
+    --white:#f7f2ff;
+    --gray:#9c94a7;
+
+    --border:rgba(180,90,255,.25);
+
+    --shadow:
+        0 0 30px rgba(140,40,255,.18);
+
+    --radius:20px;
+
+}
+
+*{
+
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+
+}
+
+html{
+
+    scroll-behavior:smooth;
+
+}
+
+body{
+
+    min-height:100vh;
+
+    background:
+        radial-gradient(
+            circle at 50% 20%,
+            rgba(120,20,220,.13),
+            transparent 35%
+        ),
+        #030006;
+
+    color:var(--white);
+
+    font-family:
+        Arial,
+        Helvetica,
+        sans-serif;
+
+    overflow-x:hidden;
+
+}
+
+/* =========================================================
+   BACKGROUND
+========================================================= */
+
+#space{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:-10;
+
+    overflow:hidden;
+
+    background:
+
+        radial-gradient(
+            circle at 50% 45%,
+            rgba(100,0,180,.08),
+            transparent 45%
+        ),
+
+        linear-gradient(
+            180deg,
+            #020004,
+            #08000d 50%,
+            #020004
+        );
+
+}
+
+/* stelle */
+
+.star{
+
+    position:absolute;
+
+    width:2px;
+
+    height:2px;
+
+    border-radius:50%;
+
+    background:#fff;
+
+    opacity:.7;
+
+    animation:
+        starFall linear infinite,
+        starTwinkle ease-in-out infinite;
+
+}
+
+@keyframes starFall{
+
+    from{
+
+        transform:
+            translate3d(0,-20px,0);
+
+    }
+
+    to{
+
+        transform:
+            translate3d(
+                var(--drift),
+                110vh,
+                0
+            );
+
+    }
+
+}
+
+@keyframes starTwinkle{
+
+    0%,100%{
+
+        opacity:.15;
+
+    }
+
+    50%{
+
+        opacity:1;
+
+    }
+
+}
+
+/* =========================================================
+   BLACK HOLE
+========================================================= */
+
+.black-hole{
+
+    position:absolute;
+
+    width:var(--size);
+
+    height:var(--size);
+
+    left:var(--x);
+
+    top:var(--y);
+
+    transform:translate(-50%,-50%) scale(.2);
+
+    border-radius:50%;
+
+    pointer-events:none;
+
+    opacity:0;
+
+    animation:
+        blackHoleLife 7s ease forwards;
+
+}
+
+.black-hole::before{
+
+    content:"";
+
+    position:absolute;
+
+    inset:-25%;
+
+    border-radius:50%;
+
+    background:
+
+        conic-gradient(
+            from 0deg,
+            transparent,
+            rgba(130,40,255,.9),
+            rgba(255,80,180,.8),
+            rgba(255,160,30,.65),
+            rgba(100,40,255,.8),
+            transparent
+        );
+
+    filter:blur(9px);
+
+    animation:
+        spinHole 1.8s linear infinite;
+
+}
+
+.black-hole::after{
+
+    content:"";
+
+    position:absolute;
+
+    inset:20%;
+
+    border-radius:50%;
+
+    background:#000;
+
+    box-shadow:
+
+        0 0 35px #000,
+
+        0 0 60px rgba(120,30,255,.35);
+
+}
+
+@keyframes spinHole{
+
+    to{
+
+        transform:rotate(360deg);
+
+    }
+
+}
+
+@keyframes blackHoleLife{
+
+    0%{
+
+        opacity:0;
+
+        transform:
+            translate(-50%,-50%)
+            scale(.1);
+
+    }
+
+    12%{
+
+        opacity:1;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1);
+
+    }
+
+    72%{
+
+        opacity:1;
+
+        transform:
+            translate(-50%,-50%)
+            scale(1.05);
+
+    }
+
+    100%{
+
+        opacity:0;
+
+        transform:
+            translate(-50%,-50%)
+            scale(.15);
+
+    }
+
+}
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+#loading-screen{
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:99999;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    background:#020004;
+
+    transition:
+        opacity .8s ease,
+        visibility .8s ease;
+
+}
+
+#loading-screen.hidden{
+
+    opacity:0;
+
+    visibility:hidden;
+
+    pointer-events:none;
+
+}
+
+.loading-title{
+
+    font-size:
+        clamp(35px,10vw,80px);
+
+    font-weight:900;
+
+    letter-spacing:
+        clamp(5px,2vw,15px);
+
+    color:#fff;
+
+    text-align:center;
+
+    text-shadow:
+
+        0 0 10px var(--purple),
+
+        0 0 30px var(--purple),
+
+        0 0 80px rgba(180,50,255,.7);
+
+    animation:
+        loadingPulse 1.4s infinite alternate;
+
+}
+
+.loading-sub{
+
+    margin-top:12px;
+
+    color:#8c8299;
+
+    letter-spacing:3px;
+
+    font-size:12px;
+
+}
+
+.loading-track{
+
+    width:
+        min(360px,80vw);
+
+    height:5px;
+
+    margin-top:30px;
+
+    border-radius:20px;
+
+    background:#15101c;
+
+    overflow:hidden;
+
+}
+
+.loading-progress{
+
+    width:0%;
+
+    height:100%;
+
+    background:
+        linear-gradient(
+            90deg,
+            #6d20ff,
+            #e45cff
+        );
+
+    box-shadow:
+        0 0 15px #a533ff;
+
+    animation:
+        loadingProgress 2.2s ease forwards;
+
+}
+
+@keyframes loadingProgress{
+
+    to{
+
+        width:100%;
+
+    }
+
+}
+
+@keyframes loadingPulse{
+
+    from{
+
+        opacity:.6;
+
+        filter:blur(.5px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        filter:blur(0);
+
+    }
+
+}
+
+/* =========================================================
+   NAVBAR
+========================================================= */
+
+nav{
+
+    position:fixed;
+
+    top:0;
+    left:0;
+    right:0;
+
+    height:70px;
+
+    z-index:500;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:space-between;
+
+    padding:
+        0 clamp(16px,4vw,50px);
+
+    background:
+        rgba(3,0,8,.78);
+
+    border-bottom:
+        1px solid rgba(170,60,255,.25);
+
+    backdrop-filter:blur(18px);
+
+}
+
+.logo{
+
+    font-size:
+        clamp(16px,4vw,22px);
+
+    font-weight:900;
+
+    letter-spacing:2px;
+
+    color:#fff;
+
+    text-shadow:
+        0 0 15px var(--purple);
+
+    white-space:nowrap;
+
+}
+
+.nav-links{
+
+    display:flex;
+
+    gap:7px;
+
+}
+
+.nav-links button{
+
+    border:0;
+
+    color:#bbb;
+
+    background:transparent;
+
+    padding:
+        10px 12px;
+
+    border-radius:10px;
+
+    cursor:pointer;
+
+    transition:.25s;
+
+    font-weight:700;
+
+}
+
+.nav-links button:hover{
+
+    color:#fff;
+
+    background:
+        rgba(150,50,255,.13);
+
+    box-shadow:
+        inset 0 0 15px rgba(150,50,255,.08);
+
+}
+
+/* mobile menu */
+
+.menu-toggle{
+
+    display:none;
+
+    width:42px;
+
+    height:42px;
+
+    border:1px solid var(--border);
+
+    border-radius:12px;
+
+    background:
+        rgba(120,30,255,.08);
+
+    color:#fff;
+
+    font-size:20px;
+
+}
+
+/* =========================================================
+   HERO
+========================================================= */
+
+.hero{
+
+    min-height:
+        100vh;
+
+    padding:
+        120px 20px 70px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    position:relative;
+
+}
+
+.hero::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:
+        min(600px,90vw);
+
+    height:
+        min(600px,90vw);
+
+    border-radius:50%;
+
+    background:
+        radial-gradient(
+            circle,
+            rgba(130,30,255,.14),
+            transparent 65%
+        );
+
+    filter:blur(20px);
+
+    animation:
+        heroGlow 5s ease-in-out infinite alternate;
+
+}
+
+@keyframes heroGlow{
+
+    from{
+
+        transform:scale(.85);
+
+        opacity:.5;
+
+    }
+
+    to{
+
+        transform:scale(1.15);
+
+        opacity:1;
+
+    }
+
+}
+
+.hero-content{
+
+    position:relative;
+
+    z-index:2;
+
+}
+
+.status{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:8px;
+
+    padding:
+        7px 13px;
+
+    border:
+        1px solid rgba(0,255,130,.25);
+
+    border-radius:50px;
+
+    background:
+        rgba(0,255,130,.05);
+
+    color:#7dffb5;
+
+    font-size:11px;
+
+    letter-spacing:2px;
+
+    margin-bottom:25px;
+
+}
+
+.status-dot{
+
+    width:7px;
+
+    height:7px;
+
+    border-radius:50%;
+
+    background:#00ff77;
+
+    box-shadow:
+        0 0 12px #00ff77;
+
+    animation:
+        blink 1s infinite;
+
+}
+
+@keyframes blink{
+
+    50%{
+
+        opacity:.2;
+
+    }
+
+}
+
+.hero h1{
+
+    font-size:
+        clamp(45px,12vw,115px);
+
+    line-height:.9;
+
+    font-weight:1000;
+
+    letter-spacing:
+        clamp(3px,1.5vw,12px);
+
+    color:#fff;
+
+    text-shadow:
+
+        0 0 8px rgba(255,255,255,.4),
+
+        0 0 25px var(--purple),
+
+        0 0 60px rgba(150,40,255,.7),
+
+        0 0 110px rgba(100,0,255,.35);
+
+    animation:
+        titleFloat 4s ease-in-out infinite;
+
+}
+
+@keyframes titleFloat{
+
+    50%{
+
+        transform:
+            translateY(-7px);
+
+    }
+
+}
+
+.hero h1 span{
+
+    display:block;
+
+    color:transparent;
+
+    background:
+        linear-gradient(
+            90deg,
+            #8e2cff,
+            #ff4fcf,
+            #ff1648,
+            #8e2cff
+        );
+
+    background-size:300%;
+
+    background-clip:text;
+
+    -webkit-background-clip:text;
+
+    animation:
+        gradientText 5s linear infinite;
+
+}
+
+@keyframes gradientText{
+
+    to{
+
+        background-position:
+            300% center;
+
+    }
+
+}
+
+.hero p{
+
+    position:relative;
+
+    margin-top:28px;
+
+    max-width:650px;
+
+    color:#a8a0b3;
+
+    line-height:1.7;
+
+    font-size:
+        clamp(14px,3vw,18px);
+
+}
+
+.hero-buttons{
+
+    position:relative;
+
+    display:flex;
+
+    flex-wrap:wrap;
+
+    justify-content:center;
+
+    gap:12px;
+
+    margin-top:35px;
+
+}
+
+.btn{
+
+    border:1px solid rgba(180,70,255,.45);
+
+    border-radius:13px;
+
+    padding:
+        14px 20px;
+
+    background:
+        rgba(120,30,255,.09);
+
+    color:#fff;
+
+    font-weight:800;
+
+    cursor:pointer;
+
+    transition:
+        transform .25s,
+        box-shadow .25s,
+        background .25s;
+
+}
+
+.btn:hover{
+
+    transform:
+        translateY(-3px);
+
+    background:
+        rgba(140,40,255,.2);
+
+    box-shadow:
+        0 0 25px rgba(150,40,255,.3);
+
+}
+
+.btn-primary{
+
+    background:
+        linear-gradient(
+            135deg,
+            #7121ff,
+            #c334ff
+        );
+
+    border-color:#b65cff;
+
+}
+
+.btn-primary:hover{
+
+    box-shadow:
+        0 0 25px rgba(180,50,255,.55),
+        0 0 60px rgba(120,30,255,.25);
+
+}
+
+/* =========================================================
+   SCROLL INDICATOR
+========================================================= */
+
+.scroll-indicator{
+
+    position:absolute;
+
+    bottom:25px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    gap:8px;
+
+    color:#665d70;
+
+    font-size:9px;
+
+    letter-spacing:3px;
+
+}
+
+.scroll-arrow{
+
+    width:20px;
+
+    height:30px;
+
+    border:
+        1px solid #554d5e;
+
+    border-radius:20px;
+
+    position:relative;
+
+}
+
+.scroll-arrow::after{
+
+    content:"";
+
+    position:absolute;
+
+    width:4px;
+
+    height:7px;
+
+    background:#9c8da9;
+
+    border-radius:10px;
+
+    top:6px;
+
+    left:7px;
+
+    animation:
+        scrollMove 1.5s infinite;
+
+}
+
+@keyframes scrollMove{
+
+    100%{
+
+        transform:
+            translateY(11px);
+
+        opacity:0;
+
+    }
+
+}
+
+/* =========================================================
+   APP
+========================================================= */
+
+.app{
+
+    width:
+        min(1250px,94%);
+
+    margin:
+        auto;
+
+    padding-bottom:100px;
+
+}
+
+/* =========================================================
+   COMMAND BAR
+========================================================= */
+
+.command{
+
+    display:grid;
+
+    grid-template-columns:
+        1fr auto;
+
+    gap:12px;
+
+    margin-bottom:25px;
+
+}
+
+.search-box{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    border:
+        1px solid rgba(170,70,255,.2);
+
+    background:
+        rgba(10,3,18,.72);
+
+    border-radius:15px;
+
+    padding:
+        0 15px;
+
+}
+
+.search-box span{
+
+    color:#7f708b;
+
+}
+
+.search-box input{
+
+    width:100%;
+
+    height:48px;
+
+    border:0;
+
+    outline:0;
+
+    background:transparent;
+
+    color:#fff;
+
+    font-size:14px;
+
+}
+
+.quick-actions{
+
+    display:flex;
+
+    gap:8px;
+
+}
+
+.quick-actions button{
+
+    min-width:50px;
+
+    border:
+        1px solid rgba(170,70,255,.2);
+
+    border-radius:14px;
+
+    background:
+        rgba(100,30,180,.08);
+
+    color:#fff;
+
+    cursor:pointer;
+
+}
+
+/* =========================================================
+   SECTIONS
+========================================================= */
+
+.sezione{
+
+    display:none;
+
+    animation:
+        sectionIn .45s ease;
+
+}
+
+.sezione.attiva{
+
+    display:block;
+
+}
+
+@keyframes sectionIn{
+
+    from{
+
+        opacity:0;
+
+        transform:
+            translateY(20px);
+
+    }
+
+    to{
+
+        opacity:1;
+
+        transform:
+            translateY(0);
+
+    }
+
+}
+
+.section-header{
+
+    margin-bottom:25px;
+
+}
+
+.section-kicker{
+
+    color:
+        #a65cff;
+
+    font-size:10px;
+
+    letter-spacing:4px;
+
+    margin-bottom:9px;
+
+}
+
+.section-header h2{
+
+    font-size:
+        clamp(28px,7vw,48px);
+
+    letter-spacing:2px;
+
+}
+
+.section-header p{
+
+    color:#81778c;
+
+    margin-top:8px;
+
+    line-height:1.6;
+
+}
+
+/* =========================================================
+   INFO
+========================================================= */
+
+.info-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(2,1fr);
+
+    gap:15px;
+
+}
+
+.info-card{
+
+    min-height:170px;
+
+    padding:23px;
+
+    border:
+        1px solid var(--border);
+
+    border-radius:18px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(18,6,30,.85),
+            rgba(6,2,12,.8)
+        );
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:.3s;
+
+}
+
+.info-card::before{
+
+    content:"";
+
+    position:absolute;
+
+    width:100px;
+
+    height:100px;
+
+    right:-40px;
+
+    top:-40px;
+
+    border-radius:50%;
+
+    background:
+        rgba(160,50,255,.15);
+
+    filter:blur(15px);
+
+}
+
+.info-card:hover{
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        rgba(190,80,255,.55);
+
+    box-shadow:
+        0 15px 40px rgba(100,20,150,.15);
+
+}
+
+.info-icon{
+
+    font-size:25px;
+
+    margin-bottom:15px;
+
+}
+
+.info-card h3{
+
+    margin-bottom:8px;
+
+}
+
+.info-card p{
+
+    color:#968da0;
+
+    line-height:1.6;
+
+    font-size:14px;
+
+}
+
+/* =========================================================
+   ARCHIVE
+========================================================= */
+
+.archive-toolbar{
+
+    display:flex;
+
+    gap:8px;
+
+    flex-wrap:wrap;
+
+    margin-bottom:20px;
+
+}
+
+.filter-btn{
+
+    padding:
+        9px 14px;
+
+    border:
+        1px solid rgba(170,70,255,.2);
+
+    border-radius:30px;
+
+    color:#968ba0;
+
+    background:
+        rgba(120,30,180,.06);
+
+    cursor:pointer;
+
+}
+
+.filter-btn.active,
+.filter-btn:hover{
+
+    color:#fff;
+
+    background:
+        rgba(140,40,255,.18);
+
+    border-color:
+        rgba(180,70,255,.5);
+
+}
+
+.archive-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+}
+
+.archive-card{
+
+    position:relative;
+
+    padding:22px;
+
+    min-height:240px;
+
+    border:
+        1px solid rgba(160,70,255,.2);
+
+    border-radius:18px;
+
+    background:
+        rgba(10,3,18,.82);
+
+    cursor:pointer;
+
+    overflow:hidden;
+
+    transition:
+        transform .25s,
+        border-color .25s,
+        box-shadow .25s;
+
+}
+
+.archive-card:hover{
+
+    transform:
+        translateY(-6px);
+
+    border-color:
+        var(--card-color);
+
+    box-shadow:
+        0 10px 40px
+        color-mix(
+            in srgb,
+            var(--card-color) 15%,
+            transparent
+        );
+
+}
+
+.card-glow{
+
+    position:absolute;
+
+    width:130px;
+
+    height:130px;
+
+    right:-60px;
+
+    top:-60px;
+
+    border-radius:50%;
+
+    background:
+        var(--card-color);
+
+    opacity:.13;
+
+    filter:blur(25px);
+
+}
+
+.card-symbol{
+
+    width:60px;
+
+    height:60px;
+
+    display:grid;
+
+    place-items:center;
+
+    border:
+        1px solid
+        var(--card-color);
+
+    border-radius:16px;
+
+    color:
+        var(--card-color);
+
+    font-size:25px;
+
+    box-shadow:
+        0 0 20px
+        color-mix(
+            in srgb,
+            var(--card-color) 20%,
+            transparent
+        );
+
+    margin-bottom:18px;
+
+}
+
+.archive-card h3{
+
+    font-size:19px;
+
+    margin-bottom:7px;
+
+}
+
+.archive-card p{
+
+    color:#8f859a;
+
+    font-size:13px;
+
+    line-height:1.6;
+
+}
+
+.card-tag{
+
+    position:absolute;
+
+    bottom:20px;
+
+    left:22px;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    color:
+        var(--card-color);
+
+}
+
+/* =========================================================
+   CHARACTER DETAILS
+========================================================= */
+
+.details{
+
+    display:none;
+
+    position:fixed;
+
+    inset:0;
+
+    z-index:1000;
+
+    background:
+        rgba(0,0,0,.75);
+
+    backdrop-filter:
+        blur(10px);
+
+    padding:
+        20px;
+
+    align-items:center;
+
+    justify-content:center;
+
+}
+
+.details.open{
+
+    display:flex;
+
+    animation:
+        detailFade .25s ease;
+
+}
+
+@keyframes detailFade{
+
+    from{
+
+        opacity:0;
+
+    }
+
+    to{
+
+        opacity:1;
+
+    }
+
+}
+
+.details-box{
+
+    width:
+        min(700px,100%);
+
+    max-height:
+        90vh;
+
+    overflow:auto;
+
+    padding:
+        clamp(22px,5vw,35px);
+
+    border:
+        1px solid var(--detail-color);
+
+    border-radius:24px;
+
+    background:
+        linear-gradient(
+            145deg,
+            rgba(17,5,28,.98),
+            rgba(4,1,9,.98)
+        );
+
+    box-shadow:
+        0 0 60px
+        color-mix(
+            in srgb,
+            var(--detail-color) 20%,
+            transparent
+        );
+
+    position:relative;
+
+}
+
+.close-details{
+
+    position:absolute;
+
+    top:15px;
+
+    right:15px;
+
+    width:40px;
+
+    height:40px;
+
+    border:
+        1px solid rgba(255,255,255,.1);
+
+    border-radius:12px;
+
+    background:
+        rgba(255,255,255,.04);
+
+    color:#fff;
+
+    cursor:pointer;
+
+}
+
+.details-symbol{
+
+    width:80px;
+
+    height:80px;
+
+    display:grid;
+
+    place-items:center;
+
+    border:
+        1px solid var(--detail-color);
+
+    border-radius:20px;
+
+    color:var(--detail-color);
+
+    font-size:35px;
+
+    margin-bottom:20px;
+
+    box-shadow:
+        0 0 35px
+        color-mix(
+            in srgb,
+            var(--detail-color) 25%,
+            transparent
+        );
+
+}
+
+.details-box h2{
+
+    font-size:
+        clamp(25px,7vw,42px);
+
+    margin-bottom:10px;
+
+}
+
+.details-description{
+
+    color:#aaa0b2;
+
+    line-height:1.7;
+
+}
+
+.details-stats{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:10px;
+
+    margin-top:25px;
+
+}
+
+.detail-stat{
+
+    padding:15px;
+
+    border:
+        1px solid rgba(255,255,255,.08);
+
+    border-radius:14px;
+
+    background:
+        rgba(255,255,255,.025);
+
+}
+
+.detail-stat span{
+
+    display:block;
+
+    font-size:9px;
+
+    letter-spacing:2px;
+
+    color:#706779;
+
+    margin-bottom:7px;
+
+}
+
+.detail-stat strong{
+
+    color:
+        var(--detail-color);
+
+}
+
+.details-lore{
+
+    margin-top:20px;
+
+    padding:18px;
+
+    border-left:
+        2px solid var(--detail-color);
+
+    background:
+        rgba(255,255,255,.025);
+
+    color:#9f96a8;
+
+    line-height:1.7;
+
+}
+
+/* =========================================================
+   RULES
+========================================================= */
+
+.rules{
+
+    display:grid;
+
+    gap:10px;
+
+}
+
+.rule{
+
+    display:grid;
+
+    grid-template-columns:
+        55px 1fr;
+
+    gap:15px;
+
+    align-items:center;
+
+    padding:20px;
+
+    border:
+        1px solid rgba(180,70,255,.17);
+
+    border-radius:16px;
+
+    background:
+        rgba(10,3,17,.75);
+
+    transition:.25s;
+
+}
+
+.rule:hover{
+
+    border-color:
+        rgba(180,70,255,.5);
+
+    transform:
+        translateX(5px);
+
+}
+
+.rule-number{
+
+    font-size:14px;
+
+    color:#a552ff;
+
+    font-weight:900;
+
+}
+
+.rule p{
+
+    color:#a69cab;
+
+    line-height:1.5;
+
+}
+
+/* =========================================================
+   LORE
+========================================================= */
+
+.lore-box{
+
+    padding:
+        clamp(22px,5vw,40px);
+
+    border:
+        1px solid rgba(180,70,255,.22);
+
+    border-radius:22px;
+
+    background:
+        linear-gradient(
+            135deg,
+            rgba(25,5,40,.8),
+            rgba(5,2,10,.85)
+        );
+
+    line-height:1.9;
+
+}
+
+.lore-box h3{
+
+    color:#c271ff;
+
+    margin-bottom:15px;
+
+    font-size:24px;
+
+}
+
+.lore-box p{
+
+    color:#a49aa9;
+
+    margin-bottom:15px;
+
+}
+
+/* =========================================================
+   POWERS
+========================================================= */
+
+.power-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+}
+
+.power{
+
+    padding:25px;
+
+    border:
+        1px solid
+        rgba(170,70,255,.2);
+
+    border-radius:20px;
+
+    background:
+        rgba(10,3,18,.8);
+
+    cursor:pointer;
+
+    transition:.3s;
+
+    text-align:center;
+
+}
+
+.power:hover{
+
+    transform:
+        translateY(-6px)
+        scale(1.01);
+
+}
+
+.atom{
+
+    width:90px;
+
+    height:90px;
+
+    margin:
+        0 auto 20px;
+
+    position:relative;
+
+}
+
+.atom-core{
+
+    position:absolute;
+
+    width:25px;
+
+    height:25px;
+
+    top:50%;
+
+    left:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:
+        var(--atom-color);
+
+    box-shadow:
+        0 0 15px var(--atom-color),
+        0 0 35px var(--atom-color),
+        0 0 60px
+        color-mix(
+            in srgb,
+            var(--atom-color) 50%,
+            transparent
+        );
+
+    animation:
+        corePulse 1.2s ease-in-out infinite alternate;
+
+}
+
+@keyframes corePulse{
+
+    to{
+
+        transform:
+            translate(-50%,-50%)
+            scale(1.35);
+
+    }
+
+}
+
+.orbit{
+
+    position:absolute;
+
+    inset:12px;
+
+    border:
+        1px solid
+        var(--atom-color);
+
+    border-radius:50%;
+
+    opacity:.75;
+
+}
+
+.orbit.one{
+
+    transform:
+        rotate(60deg)
+        scaleY(.4);
+
+    animation:
+        orbitSpin 3s linear infinite;
+
+}
+
+.orbit.two{
+
+    transform:
+        rotate(-60deg)
+        scaleY(.4);
+
+    animation:
+        orbitSpin 4s linear infinite reverse;
+
+}
+
+.orbit.three{
+
+    transform:
+        rotate(0)
+        scaleY(.4);
+
+    animation:
+        orbitSpin 5s linear infinite;
+
+}
+
+@keyframes orbitSpin{
+
+    to{
+
+        rotate:360deg;
+
+    }
+
+}
+
+.power h3{
+
+    margin-bottom:8px;
+
+}
+
+.power p{
+
+    color:#918697;
+
+    font-size:13px;
+
+    line-height:1.5;
+
+}
+
+/* =========================================================
+   FACTIONS
+========================================================= */
+
+.faction-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3,1fr);
+
+    gap:15px;
+
+}
+
+.faction{
+
+    padding:25px;
+
+    min-height:230px;
+
+    border:
+        1px solid
+        rgba(255,255,255,.1);
+
+    border-radius:20px;
+
+    background:
+        rgba(8,3,14,.8);
+
+    cursor:pointer;
+
+    position:relative;
+
+    overflow:hidden;
+
+    transition:.3s;
+
+}
+
+.faction:hover{
+
+    transform:
+        translateY(-5px);
+
+    border-color:
+        var(--faction-color);
+
+}
+
+.faction-line{
+
+    position:absolute;
+
+    top:0;
+    left:0;
+
+    width:100%;
+
+    height:3px;
+
+    background:
+        var(--faction-color);
+
+    box-shadow:
+        0 0 15px var(--faction-color);
+
+}
+
+.faction h3{
+
+    margin:
+        15px 0 10px;
+
+    color:
+        var(--faction-color);
+
+}
+
+.faction p{
+
+    color:#8f8698;
+
+    line-height:1.6;
+
+    font-size:13px;
+
+}
+
+.faction-members{
+
+    margin-top:20px;
+
+    color:#6f6677;
+
+    font-size:10px;
+
+    letter-spacing:1px;
+
+}
+
+/* =========================================================
+   LABORATORIO
+========================================================= */
+
+.lab-card{
+
+    min-height:300px;
+
+    border:
+        1px solid rgba(180,70,255,.25);
+
+    border-radius:25px;
+
+    background:
+        radial-gradient(
+            circle at center,
+            rgba(120,30,255,.15),
+            transparent 45%
+        ),
+        rgba(7,2,13,.9);
+
+    display:flex;
+
+    flex-direction:column;
+
+    align-items:center;
+
+    justify-content:center;
+
+    text-align:center;
+
+    padding:30px;
+
+    position:relative;
+
+    overflow:hidden;
+
+}
+
+.lab-atom{
+
+    width:120px;
+
+    height:120px;
+
+    position:relative;
+
+    margin-bottom:25px;
+
+}
+
+.lab-core{
+
+    position:absolute;
+
+    width:35px;
+
+    height:35px;
+
+    top:50%;
+    left:50%;
+
+    transform:
+        translate(-50%,-50%);
+
+    border-radius:50%;
+
+    background:
+        #9b3cff;
+
+    box-shadow:
+        0 0 20px #9b3cff,
+        0 0 60px #9b3cff;
+
+    animation:
+        labPulse 1s infinite alternate;
+
+}
+
+.lab-ring{
+
+    position:absolute;
+
+    inset:10px;
+
+    border:
+        1px solid #9b3cff;
+
+    border-radius:50%;
+
+    animation:
+        ringSpin 4s linear infinite;
+
+}
+
+.lab-ring:nth-child(2){
+
+    transform:
+        rotateX(70deg);
+
+}
+
+.lab-ring:nth-child(3){
+
+    transform:
+        rotateY(70deg);
+
+}
+
+@keyframes labPulse{
+
+    to{
+
+        transform:
+            translate(-50%,-50%)
+            scale(1.3);
+
+    }
+
+}
+
+@keyframes ringSpin{
+
+    to{
+
+        transform:
+            rotate(360deg);
+
+    }
+
+}
+
+.lab-card h3{
+
+    font-size:25px;
+
+    margin-bottom:8px;
+
+}
+
+.lab-card p{
+
+    color:#918697;
+
+    max-width:600px;
+
+    line-height:1.6;
+
+    margin-bottom:22px;
+
+}
+
+/* =========================================================
+   FOOTER
+========================================================= */
+
+footer{
+
+    border-top:
+        1px solid rgba(180,70,255,.12);
+
+    padding:
+        35px 20px;
+
+    text-align:center;
+
+    color:#5f5768;
+
+    font-size:11px;
+
+    line-height:2;
+
+}
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+#toast{
+
+    position:fixed;
+
+    left:50%;
+
+    bottom:25px;
+
+    z-index:3000;
+
+    transform:
+        translate(-50%,30px);
+
+    opacity:0;
+
+    pointer-events:none;
+
+    padding:
+        13px 18px;
+
+    border:
+        1px solid rgba(180,70,255,.35);
+
+    border-radius:12px;
+
+    background:
+        rgba(10,2,17,.95);
+
+    box-shadow:
+        0 0 30px rgba(140,30,255,.2);
+
+    color:#fff;
+
+    font-size:12px;
+
+    transition:.35s;
+
+    white-space:nowrap;
+
+}
+
+#toast.show{
+
+    transform:
+        translate(-50%,0);
+
+    opacity:1;
+
+}
+
+/* =========================================================
+   MOBILE
+========================================================= */
+
+@media(max-width:800px){
+
+    nav{
+
+        height:62px;
+
+    }
+
+    .nav-links{
+
+        display:none;
+
+        position:absolute;
+
+        top:70px;
+
+        left:12px;
+
+        right:12px;
+
+        flex-direction:column;
+
+        padding:10px;
+
+        background:
+            rgba(5,1,10,.96);
+
+        border:
+            1px solid rgba(170,60,255,.25);
+
+        border-radius:16px;
+
+        backdrop-filter:blur(20px);
+
+    }
+
+    .nav-links.mobile-open{
+
+        display:flex;
+
+    }
+
+    .nav-links button{
+
+        text-align:left;
+
+        padding:14px;
+
+    }
+
+    .menu-toggle{
+
+        display:block;
+
+    }
+
+    .hero{
+
+        padding-top:100px;
+
+    }
+
+    .hero h1{
+
+        font-size:
+            clamp(43px,14vw,75px);
+
+    }
+
+    .command{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .quick-actions{
+
+        display:grid;
+
+        grid-template-columns:
+            repeat(3,1fr);
+
+    }
+
+    .quick-actions button{
+
+        height:45px;
+
+    }
+
+    .info-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .archive-grid{
+
+        grid-template-columns:
+            repeat(2,1fr);
+
+    }
+
+    .power-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .faction-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .details{
+
+        padding:10px;
+
+    }
+
+    .details-box{
+
+        max-height:94vh;
+
+        border-radius:20px;
+
+    }
+
+}
+
+@media(max-width:500px){
+
+    .app{
+
+        width:
+            calc(100% - 24px);
+
+    }
+
+    .archive-grid{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .archive-card{
+
+        min-height:210px;
+
+    }
+
+    .details-stats{
+
+        grid-template-columns:1fr;
+
+    }
+
+    .hero-buttons{
+
+        width:100%;
+
+    }
+
+    .hero-buttons .btn{
+
+        width:100%;
+
+    }
+
+    .rule{
+
+        grid-template-columns:
+            40px 1fr;
+
+        padding:16px;
+
+    }
+
+    .section-header h2{
+
+        font-size:32px;
+
+    }
+
+    #toast{
+
+        max-width:90vw;
+
+        white-space:normal;
+
+        text-align:center;
+
+    }
+
+}
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+button,
+input{
+
+    -webkit-tap-highlight-color:
+        transparent;
+
+}
+
+button:active{
+
+    transform:
+        scale(.96);
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<!-- =====================================================
+     BACKGROUND
+===================================================== -->
+
+<div id="space"></div>
+
+
+<!-- =====================================================
+     LOADING
+===================================================== -->
+
+<div id="loading-screen">
+
+    <div class="loading-title">
+        SILENT SCREAM
+    </div>
+
+    <div class="loading-sub">
+        INIZIALIZZAZIONE DEL SISTEMA
+    </div>
+
+    <div class="loading-track">
+
+        <div class="loading-progress"></div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     NAV
+===================================================== -->
+
+<nav>
+
+    <div class="logo">
+        SILENT SCREAM
+    </div>
+
+    <button
+        class="menu-toggle"
+        onclick="toggleMobileMenu()"
+        aria-label="Menu"
+    >
+        ☰
+    </button>
+
+    <div
+        class="nav-links"
+        id="navLinks"
+    >
+
+        <button onclick="apriSezione('home')">
+            Home
+        </button>
+
+        <button onclick="apriSezione('info')">
+            Informazioni
+        </button>
+
+        <button onclick="apriSezione('regole')">
+            Regole
+        </button>
+
+        <button onclick="apriSezione('lore')">
+            Lore
+        </button>
+
+        <button onclick="apriSezione('personaggi')">
+            Personaggi
+        </button>
+
+        <button onclick="apriSezione('fazioni')">
+            Fazioni
+        </button>
+
+        <button onclick="apriSezione('poteri')">
+            Poteri
+        </button>
+
+        <button onclick="vaiLaboratorio()">
+            Laboratorio
+        </button>
+
+    </div>
+
+</nav>
+
+
+<!-- =====================================================
+     HERO
+===================================================== -->
+
+<header class="hero">
+
+    <div class="hero-content">
+
+        <div class="status">
+
+            <span class="status-dot"></span>
+
+            SISTEMA ONLINE
+
+        </div>
+
+        <h1>
+
+            SILENT
+
+            <span>SCREAM</span>
+
+        </h1>
+
+        <p>
+
+            Benvenuti nel sito di Silent Scream
+
+        </p>
+
+        <div class="hero-buttons">
+
+            <button
+                class="btn btn-primary"
+                onclick="apriSezione('personaggi')"
+            >
+                👤 ARCHIVIO PERSONAGGI
+            </button>
+
+            <button
+                class="btn"
+                onclick="apriSezione('fazioni')"
+            >
+                ⚔️ FAZIONI
+            </button>
+
+            <button
+                class="btn"
+                onclick="vaiLaboratorio()"
+            >
+                🧪 LABORATORIO
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <div class="scroll-indicator">
+
+        SCROLL
+
+        <div class="scroll-arrow"></div>
+
+    </div>
+
+</header>
+
+
+<!-- =====================================================
+     APP
+===================================================== -->
+
+<main class="app">
+
+
+    <!-- COMMAND -->
+
+    <div class="command">
+
+        <div class="search-box">
+
+            <span>⌕</span>
+
+            <input
+                id="search"
+                type="search"
+                placeholder="Cerca personaggi, fazioni, poteri..."
+                autocomplete="off"
+                oninput="cercaArchivio()"
+            >
+
+        </div>
+
+
+        <div class="quick-actions">
+
+            <button
+                onclick="apriSezione('personaggi')"
+                title="Personaggi"
+            >
+                👤
+            </button>
+
+            <button
+                onclick="apriSezione('fazioni')"
+                title="Fazioni"
+            >
+                ⚔️
+            </button>
+
+            <button
+                onclick="apriSezione('poteri')"
+                title="Poteri"
+            >
+                ⚡
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- =================================================
+         HOME
+    ================================================== -->
+
+    <section
+        id="home"
+        class="sezione attiva"
+    >
+
+        <div class="section-header">
+
+            <div class="section-kicker">
+                SYSTEM // 001
+            </div>
+
+            <h2>
+                BENVENUTO
+            </h2>
+
+            <p>
+                Il sistema centrale di Silent Scream
+                è operativo.
+            </p>
+
+        </div>
+
+
+        <div class="info-grid">
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    🧬
+                </div>
+
+                <h3>
+                    Un nuovo mondo
+                </h3>
+
+                <p>
+                    Costruisci la tua storia,
+                    scegli il tuo potere e
+                    scopri cosa si nasconde
+                    dietro Silent Scream.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    🌌
+                </div>
+
+                <h3>
+                    Energia sconosciuta
+                </h3>
+
+                <p>
+                    Chaos, Abisso, Izanami,
+                    Serafino e altre energie
+                    convivono in un sistema
+                    instabile.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    ⚔️
+                </div>
+
+                <h3>
+                    Fazioni
+                </h3>
+
+                <p>
+                    Organizzazioni diverse
+                    combattono per il controllo
+                    delle nuove energie.
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    🧪
+                </div>
+
+                <h3>
+                    Laboratorio
+                </h3>
+
+                <p>
+                    Analizza gli atomi,
+                    manipola l'energia e
+                    scopri le anomalie.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         INFO
+    ================================================== -->
+
+    <section
+        id="info"
+        class="sezione"
+    >
+
+        <div class="section-header">
+
+            <div class="section-kicker">
+                SYSTEM // 002
+            </div>
+
+            <h2>
+                INFORMAZIONI
+            </h2>
+
+            <p>
+                Dati principali del Roleplay.
+            </p>
+
+        </div>
+
+
+        <div class="info-grid">
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    👑
+                </div>
+
+                <h3>
+                    Creatori
+                </h3>
+
+                <p>
+                    Mob, Alex e Yuki
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    📦
+                </div>
+
+                <h3>
+                    Versione
+                </h3>
+
+                <p>
+                    1.0
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    🟢
+                </div>
+
+                <h3>
+                    Stato
+                </h3>
+
+                <p>
+                    In sviluppo
+                </p>
+
+            </div>
+
+
+            <div class="info-card">
+
+                <div class="info-icon">
+                    🌐
+                </div>
+
+                <h3>
+                    Descrizione
+                </h3>
+
+                <p>
+                    Silent Scream nasce principalmente
+                    per divertimento, creatività e
+                    socializzazione.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         REGOLE
+    ================================================== -->
+
+    <section
+        id="regole"
+        class="sezione"
+    >
+
+        <div class="section-header">
+
+            <div class="section-kicker">
+                SYSTEM // 003
+            </div>
+
+            <h2>
+                REGOLE
+            </h2>
+
+            <p>
+                Il sistema richiede il rispetto
+                delle seguenti direttive.
+            </p>
+
+        </div>
+
+
+        <div class="rules">
+
+            <div class="rule">
+
+                <div class="rule-number">
+                    01
+                </div>
+
+                <p>
+                    Rispetta tutti i giocatori.
+                </p>
+
+            </div>
+
+
+            <div class="rule">
+
+                <div class="rule-number">
+                    02
+                </div>
+
+                <p>
+                    Non usare bug o exploit.
+                </p>
+
+            </div>
+
+
+            <div class="rule">
+
+                <div class="rule-number">
+                    03
+                </div>
+
+                <p>
+                    Rispetta le regole del Roleplay.
+                </p>
+
+            </div>
+
+
+            <div class="rule">
+
+                <div class="rule-number">
+                    04
+                </div>
+
+                <p>
+                    Non rovinare l'esperienza agli altri.
+                </p>
+
+            </div>
+
+
+            <div class="rule">
+
+                <div class="rule-number">
+                    05
+                </div>
+
+                <p>
+                    Non abusare dei poteri fuori
+                    dal contesto RP.
+                </p>
+
+            </div>
+
+
+            <div class="rule">
+
+                <div class="rule-number">
+                    06
+                </div>
+
+                <p>
+                    Segui le indicazioni degli owner
+                    e degli amministratori.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         LORE
+    ================================================== -->
+
+    <section
+        id="lore"
+        class="sezione"
+    >
+
+        <div class="section-header">
+
+            <div class="section-kicker">
+                SYSTEM // 004
+            </div>
+
+            <h2>
+                LORE
+            </h2>
+
+            <p>
+                Gli eventi che hanno dato origine
+                a Silent Scream.
+            </p>
+
+        </div>
+
+
+        <div class="lore-box">
+
+            <h3>
+                IL PRIMO SEGNALE
+            </h3>
+
+            <p>
+                Nessuno ricorda esattamente quando
+                tutto ebbe inizio.
+            </p>
+
+            <p>
+                Alcuni scienziati rilevarono una
+                frequenza impossibile provenire
+                dal vuoto.
+            </p>
+
+            <p>
+                La frequenza non era naturale.
+                Sembrava quasi rispondere
+                alla presenza umana.
+            </p>
+
+            <p>
+                Poco dopo comparvero le prime
+                particelle anomale.
+            </p>
+
+            <p>
+                Alcune producevano energia.
+                Altre modificavano la materia.
+                Altre ancora sembravano provenire
+                da qualcosa che non apparteneva
+                al nostro universo.
+            </p>
+
+            <p>
+                Furono chiamate:
+                <strong>
+                    ATOMI
+                </strong>.
+            </p>
+
+            <p>
+                Da quel momento nacquero fazioni,
+                esperimenti e guerre.
+            </p>
+
+            <p>
+                E nel silenzio dello spazio,
+                qualcosa iniziò a urlare.
+            </p>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         PERSONAGGI
+    ================================================== -->
+
+    <section
+        id="personaggi"
+        class="sezione"
+    >
+
+        <div class="section-header">
+
+            <div class="section-kicker">
+                DATABASE // CHARACTERS
+            </div>
+
+            <h2>
+                ARCHIVIO PERSONAGGI
+            </h2>
+
+            <p>
+                Seleziona un personaggio per
+                visualizzare il dossier completo.
+            </p>
+
+        </div>
+
+
+        <div class="archive-toolbar">
+
+            <button
+                class="filter-btn active"
+                onclick="filtraPersonaggi('tutti',this)"
+            >
+                TUTTI
+            </button>
+
+            <button
+                class="filter-btn"
+                onclick="filtraPersonaggi('owner',this)"
+            >
+                OWNER
+            </button>
+
+            <button
+                class="filter-btn"
+                onclick="filtraPersonaggi('chaos',this)"
+            >
+                CHAOS
+            </button>
+
+            <button
+                class="filter-btn"
+                onclick="filtraPersonaggi('abisso',this)"
+            >
+                ABISSO
+            </button>
+
+            <button
+                class="filter-btn"
+                onclick="filtraPersonaggi('serafino',this)"
+            >
+                SERAFINO
+            </button>
+
+        </div>
+
+
+        <div
+            id="personaggi-grid"
+            class="archive-grid"
+        >
+
+            <div
+                class="archive-card searchable"
+                data-category="owner chaos"
+                data-search="mob chaos owner"
+                style="--card-color:#ff5a00"
+                onclick="mostraDettaglio('mob')"
+            >
+
+                <div class="card-glow"></div>
+
+                <div class="card-symbol">
+                    ☄
+                </div>
+
+                <h3>
+                    MOB
+                </h3>
+
+                <p>
+                    Owner del RP.
+                    Principalmente composto
+                    da energia Chaos.
+                </p>
+
+                <div class="card-tag">
+                    CHAOS // OWNER
+                </div>
+
+            </div>
+
+
+            <div
+                class="archive-card searchable"
+                data-category="owner abisso"
+                data-search="alex abisso owner radioattivo"
+                style="--card-color:#009dff"
+                onclick="mostraDettaglio('alex')"
+            >
+
+                <div class="card-glow"></div>
+
+                <div class="card-symbol">
+                    ◉
+                </div>
+
+                <h3>
+                    ALEX
+                </h3>
+
+                <p>
+                    Owner e portatore
+                    dell'essenza particellare
+                    radioattiva del vuoto.
+                </p>
+
+                <div class="card-tag">
+                    ABISSO // OWNER
+                </div>
+
+            </div>
+
+
+            <div
+                class="archive-card searchable"
+                data-category="owner serafino"
+                data-search="yuki serafino izanami illusioni owner"
+                style="--card-color:#ff22b8"
+                onclick="mostraDettaglio('yuki')"
+            >
+
+                <div class="card-glow"></div>
+
+                <div class="card-symbol">
+                    ✦
+                </div>
+
+                <h3>
+                    YUKI
+                </h3>
+
+                <p>
+                    Maestro delle illusioni,
+                    Serafino e Izanami.
+                </p>
+
+                <div class="card-tag">
+                    SERAFINO // OWNER
+                </div>
+
+            </div>
+
+
+            <div
+                class="archive-card searchable"
+                data-category="chaos"
+                data-search="kael chaos"
+                style="--card-color:#ff3300"
+                onclick="mostraDettaglio('kael')"
+            >
+
+                <div class="card-glow"></div>
+
+                <div class="card-symbol">
+                    X
+                </div>
+
+                <h3>
+                    KAEL
+                </h3>
+
+                <p>
+                    Soggetto sperimentale
+                    legato all'energia Chaos.
+                </p>
+
+                <div class="card-tag">
+                    CHAOS // SUBJECT
+                </div>
+
+            </div>
+
+
+            <div
+                class="archive-card searchable"
+                data-category="abisso"
+                data-search="nox abisso"
+                style="--card-color:#6b4cff"
+                onclick="mostraDettaglio('nox')"
+            >
+
+                <div class="card-glow"></div>
+
+                <div class="card-symbol">
+                    ◇
+                </div>
+
+                <h3>
+                    NOX
+                </h3>
+
+                <p>
+                    Entità associata
+                    alle particelle abissali.
+                </p>
+
+                <div class="card-tag">
+                    ABISSO // ENTITY
+                </div>
+
+            </div>
+
+
+            <div
+                class="archive-card searchable"
+                data-category="serafino"
+                data-search="aria serafino"
+                style="--card-color:#fff"
+                onclick="mostraDettaglio('aria')"
+            >
+
+                <div class="card-glow"></div>
+
+                <div class="card-symbol">
+                    ✧
+                </div>
+
+                <h3>
+                    ARIA
+                </h3>
+
+                <p>
+                    Soggetto con connessioni
+                    alla struttura Serafino.
+                </p>
+
+                <div class="card-tag">
+                    SERAFINO // UNKNOWN
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         FAZIONI
+    ================================================== -->
+
+    <section
+        id="fazioni"
+        class="sezione"
+    >
+
+        <div class="section-header">
+
+            <div class="section-kicker">
+                DATABASE // FACTIONS
+            </div>
+
+            <h2>
+                ARCHIVIO FAZIONI
+            </h2>
+
+            <p>
+                Le principali organizzazioni
+                presenti nel mondo.
+            </p>
+
+        </div>
+
+
+        <div class="faction-grid">
+
+
+            <div
+                class="faction"
+                style="--faction-color:#ff4b00"
+                onclick="mostraDettaglio('chaosFaction')"
+            >
+
+                <div class="faction-line"></div>
+
+                <h3>
+                    CHAOS ORDER
+                </h3>
+
+                <p>
+                    Una fazione che considera
+                    il Chaos la forma più pura
+                    dell'energia.
+                </p>
+
+                <div class="faction-members">
+                    STATUS: ATTIVA
+                </div>
+
+            </div>
+
+
+            <div
+                class="faction"
+                style="--faction-color:#542cff"
+                onclick="mostraDettaglio('abyssFaction')"
+            >
+
+                <div class="faction-line"></div>
+
+                <h3>
+                    ABYSS
+                </h3>
+
+                <p>
+                    Studiano le particelle
+                    provenienti dal vuoto
+                    e dall'abisso.
+                </p>
+
+                <div class="faction-members">
+                    STATUS: ATTIVA
+                </div>
+
+            </div>
+
+
+            <div
+                class="faction"
+                style="--faction-color:#ff22b8"
+                onclick="mostraDettaglio('seraphFaction')"
+            >
+
+                <div class="faction-line"></div>
+
+                <h3>
+                    SERAPHIM
+                </h3>
+
+                <p>
+                    Un'organizzazione misteriosa
+                    legata ai soggetti Serafino.
+                </p>
+
+                <div class="faction-members">
+                    STATUS: SCONOSCIUTO
+                </div>
+
+            </div>
+
+
+            <div
+                class="faction"
+                style="--faction-color:#00ff88"
+                onclick="mostraDettaglio('labFaction')"
+            >
+
+                <div class="faction-line"></div>
+
+                <h3>
+                    LABORATORIO
+                </h3>
+
+                <p>
+                    Scienziati e ricercatori
+                    che analizzano gli atomi.
+                </p>
+
+                <div class="faction-members">
+                    STATUS: SEGRETO
+                </div>
+
+            </div>
+
+
+            <div
+                class="faction"
+                style="--faction-color:#009dff"
+                onclick="mostraDettaglio('voidFaction')"
+            >
+
+                <div class="faction-line"></div>
+
+                <h3>
+                    VOID WALKERS
+                </h3>
+
+                <p>
+                    Individui capaci di attraversare
+                    zone colpite dalle anomalie.
+                </p>
+
+                <div class="faction-members">
+                    STATUS: NOMADE
+                </div>
+
+            </div>
+
+
+            <div
+                class="faction"
+                style="--faction-color:#fff"
+                onclick="mostraDettaglio('unknownFaction')"
+            >
+
+                <div class="faction-line"></div>
+
+                <h3>
+                    [UNKNOWN]
+                </h3>
+
+                <p>
+                    Nessuna informazione verificata.
+                    Tutti i dati risultano corrotti.
+                </p>
+
+                <div class="faction-members">
+                    STATUS: █████
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         POTERI
+    ================================================== -->
+
+    <section
+        id="poteri"
+        class="sezione"
+    >
+
+        <div class="section-header">
+
+            <div class="section-kicker">
+                DATABASE // ENERGY
+            </div>
+
+            <h2>
+                ARCHIVIO POTERI
+            </h2>
+
+            <p>
+                Le principali fonti energetiche
+                conosciute.
+            </p>
+
+        </div>
+
+
+        <div class="power-grid">
+
+
+            <div
+                class="power"
+                onclick="mostraDettaglio('chaosPower')"
+            >
+
+                <div
+                    class="atom"
+                    style="--atom-color:#ff5a00"
+                >
+
+                    <div class="atom-core"></div>
+
+                    <div class="orbit one"></div>
+
+                    <div class="orbit two"></div>
+
+                    <div class="orbit three"></div>
+
+                </div>
+
+                <h3>
+                    CHAOS
+                </h3>
+
+                <p>
+                    Energia altamente distruttiva
+                    e imprevedibile.
+                </p>
+
+            </div>
+
+
+            <div
+                class="power"
+                onclick="mostraDettaglio('abyssPower')"
+            >
+
+                <div
+                    class="atom"
+                    style="--atom-color:#542cff"
+                >
+
+                    <div class="atom-core"></div>
+
+                    <div class="orbit one"></div>
+
+                    <div class="orbit two"></div>
+
+                    <div class="orbit three"></div>
+
+                </div>
+
+                <h3>
+                    ABISSO
+                </h3>
+
+                <p>
+                    Energia collegata
+                    al vuoto.
+                </p>
+
+            </div>
+
+
+            <div
+                class="power"
+                onclick="mostraDettaglio('izanamiPower')"
+            >
+
+                <div
+                    class="atom"
+                    style="--atom-color:#ff2255"
+                >
+
+                    <div class="atom-core"></div>
+
+                    <div class="orbit one"></div>
+
+                    <div class="orbit two"></div>
+
+                    <div class="orbit three"></div>
+
+                </div>
+
+                <h3>
+                    IZANAMI
+                </h3>
+
+                <p>
+                    Struttura energetica
+                    estremamente rara.
+                </p>
+
+            </div>
+
+
+            <div
+                class="power"
+                onclick="mostraDettaglio('seraphPower')"
+            >
+
+                <div
+                    class="atom"
+                    style="--atom-color:#ff22b8"
+                >
+
+                    <div class="atom-core"></div>
+
+                    <div class="orbit one"></div>
+
+                    <div class="orbit two"></div>
+
+                    <div class="orbit three"></div>
+
+                </div>
+
+                <h3>
+                    SERAFINO
+                </h3>
+
+                <p>
+                    Energia sconosciuta
+                    con comportamento anomalo.
+                </p>
+
+            </div>
+
+
+            <div
+                class="power"
+                onclick="mostraDettaglio('radioPower')"
+            >
+
+                <div
+                    class="atom"
+                    style="--atom-color:#00ff88"
+                >
+
+                    <div class="atom-core"></div>
+
+                    <div class="orbit one"></div>
+
+                    <div class="orbit two"></div>
+
+                    <div class="orbit three"></div>
+
+                </div>
+
+                <h3>
+                    RADIOATTIVO
+                </h3>
+
+                <p>
+                    Energia instabile
+                    di origine naturale.
+                </p>
+
+            </div>
+
+
+            <div
+                class="power"
+                onclick="mostraDettaglio('unknownPower')"
+            >
+
+                <div
+                    class="atom"
+                    style="--atom-color:#ffffff"
+                >
+
+                    <div class="atom-core"></div>
+
+                    <div class="orbit one"></div>
+
+                    <div class="orbit two"></div>
+
+                    <div class="orbit three"></div>
+
+                </div>
+
+                <h3>
+                    UNKNOWN
+                </h3>
+
+                <p>
+                    Nessun dato disponibile.
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- =================================================
+         LABORATORIO
+    ================================================== -->
+
+    <section
+        id="laboratorio"
+        class="sezione"
+    >
+
+        <div class="section-header">
+
+            <div class="section-kicker">
+                SYSTEM // LAB
+            </div>
+
+            <h2>
+                LABORATORIO
+            </h2>
+
+            <p>
+                Accesso alla struttura scientifica.
+            </p>
+
+        </div>
+
+
+        <div class="lab-card">
+
+            <div class="lab-atom">
+
+                <div class="lab-core"></div>
+
+                <div class="lab-ring"></div>
+
+                <div class="lab-ring"></div>
+
+                <div class="lab-ring"></div>
+
+            </div>
+
+
+            <h3>
+                LABORATORIO ATOMICO
+            </h3>
+
+            <p>
+                Analizza gli atomi, modifica
+                l'energia e scopri cosa succede
+                quando un campione raggiunge
+                il limite di stabilità.
+            </p>
+
+
+            <button
+                class="btn btn-primary"
+                onclick="vaiLaboratorio()"
+            >
+                ENTRA NEL LABORATORIO
+            </button>
+
+        </div>
+
+    </section>
+
+
+</main>
+
+
+<!-- =====================================================
+     DETAILS MODAL
+===================================================== -->
+
+<div
+    id="details"
+    class="details"
+    onclick="chiudiDettaglio(event)"
+>
+
+    <div
+        class="details-box"
+        id="detailsBox"
+        onclick="event.stopPropagation()"
+    >
+
+        <button
+            class="close-details"
+            onclick="chiudiDettaglio()"
+        >
+            ✕
+        </button>
+
+
+        <div
+            class="details-symbol"
+            id="detailsSymbol"
+        >
+            ?
+        </div>
+
+
+        <h2 id="detailsTitle">
+            DATABASE
+        </h2>
+
+
+        <p
+            class="details-description"
+            id="detailsDescription"
+        >
+            Nessun dato.
+        </p>
+
+
+        <div
+            class="details-stats"
+            id="detailsStats"
+        >
+        </div>
+
+
+        <div
+            class="details-lore"
+            id="detailsLore"
+        >
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     TOAST
+===================================================== -->
+
+<div id="toast"></div>
+
+
+<!-- =====================================================
+     FOOTER
+===================================================== -->
+
+<footer>
+
+    <p>
+        © 2026 — SILENT SCREAM RP
+    </p>
+
+    <p>
+        Creato da Mob
+    </p>
+
+    <p>
+        Versione 1.0
+    </p>
+
+</footer>
+
+
+<script>
+
+/* =========================================================
+   DATABASE
+========================================================= */
+
+const database = {
+
+    mob: {
+
+        symbol:"☄",
+
+        title:"MOB",
+
+        color:"#ff5a00",
+
+        description:
+            "Owner del Silent Scream RP. La sua struttura energetica è principalmente composta da Chaos.",
+
+        stats:[
+            ["TIPO","CHAOS"],
+            ["RUOLO","OWNER"],
+            ["STATO","ATTIVO"]
+        ],
+
+        lore:
+            "Mob è uno dei principali creatori del sistema. Il suo legame con il Chaos gli permette di utilizzare una quantità enorme di energia, ma rende anche difficile mantenere la stabilità."
+
+    },
+
+    alex: {
+
+        symbol:"◉",
+
+        title:"ALEX",
+
+        color:"#009dff",
+
+        description:
+            "Owner e portatore di un'essenza particellare radioattiva proveniente dal vuoto.",
+
+        stats:[
+            ["TIPO","ABISSO"],
+            ["RUOLO","OWNER"],
+            ["STATO","ATTIVO"]
+        ],
+
+        lore:
+            "L'origine dell'essenza di Alex non è stata completamente determinata. I ricercatori ritengono che possa essere collegata alle anomalie del vuoto."
+
+    },
+
+    yuki: {
+
+        symbol:"✦",
+
+        title:"YUKI",
+
+        color:"#ff22b8",
+
+        description:
+            "Maestro delle illusioni e portatore di Serafino e Izanami.",
+
+        stats:[
+            ["TIPO","SERAFINO"],
+            ["RUOLO","OWNER"],
+            ["STATO","ATTIVO"]
+        ],
+
+        lore:
+            "Yuki possiede una combinazione estremamente rara di capacità. Le sue illusioni possono interagire con l'energia degli atomi."
+
+    },
+
+    kael: {
+
+        symbol:"X",
+
+        title:"KAEL",
+
+        color:"#ff3300",
+
+        description:
+            "Soggetto sperimentale collegato all'energia Chaos.",
+
+        stats:[
+            ["TIPO","CHAOS"],
+            ["LIVELLO","ALTO"],
+            ["RISCHIO","ESTREMO"]
+        ],
+
+        lore:
+            "Kael è stato sottoposto a esperimenti energetici che hanno modificato permanentemente la sua struttura."
+
+    },
+
+    nox: {
+
+        symbol:"◇",
+
+        title:"NOX",
+
+        color:"#6b4cff",
+
+        description:
+            "Entità associata alle particelle abissali.",
+
+        stats:[
+            ["TIPO","ABISSO"],
+            ["ORIGINE","IGNOTA"],
+            ["RISCHIO","ALTO"]
+        ],
+
+        lore:
+            "Nox appare principalmente durante le anomalie. Non è ancora chiaro se sia un individuo o una manifestazione dell'Abisso."
+
+    },
+
+    aria: {
+
+        symbol:"✧",
+
+        title:"ARIA",
+
+        color:"#ffffff",
+
+        description:
+            "Soggetto collegato alla struttura energetica Serafino.",
+
+        stats:[
+            ["TIPO","SERAFINO"],
+            ["ORIGINE","IGNOTA"],
+            ["RISCHIO","???"]
+        ],
+
+        lore:
+            "I dati relativi ad Aria sono incompleti. Alcuni file del laboratorio risultano corrotti ogni volta che il suo nome viene registrato."
+
+    },
+
+
+    chaosFaction: {
+
+        symbol:"☄",
+
+        title:"CHAOS ORDER",
+
+        color:"#ff4b00",
+
+        description:
+            "Una fazione che considera il Chaos la forma più pura dell'energia.",
+
+        stats:[
+            ["TIPO","FAZIONE"],
+            ["STATO","ATTIVA"],
+            ["IDEA","CHAOS"]
+        ],
+
+        lore:
+            "La Chaos Order ritiene che l'instabilità sia necessaria per raggiungere una forma superiore di potere."
+
+    },
+
+    abyssFaction: {
+
+        symbol:"◈",
+
+        title:"ABYSS",
+
+        color:"#542cff",
+
+        description:
+            "Organizzazione specializzata nello studio delle particelle provenienti dal vuoto.",
+
+        stats:[
+            ["TIPO","FAZIONE"],
+            ["STATO","ATTIVA"],
+            ["AREA","ABISSO"]
+        ],
+
+        lore:
+            "I membri dell'Abys sono tra i pochi ad avere accesso ai dati originali delle prime anomalie."
+
+    },
+
+    seraphFaction: {
+
+        symbol:"✦",
+
+        title:"SERAPHIM",
+
+        color:"#ff22b8",
+
+        description:
+            "Organizzazione misteriosa collegata ai soggetti Serafino.",
+
+        stats:[
+            ["TIPO","FAZIONE"],
+            ["STATO","SCONOSCIUTO"],
+            ["LIVELLO","???"]
+        ],
+
+        lore:
+            "Nessuno sa chi controlli realmente i Seraphim. Alcuni credono che la fazione esistesse prima della comparsa degli atomi."
+
+    },
+
+    labFaction: {
+
+        symbol:"🧪",
+
+        title:"LABORATORIO",
+
+        color:"#00ff88",
+
+        description:
+            "Scienziati e ricercatori che studiano gli atomi.",
+
+        stats:[
+            ["TIPO","SCIENZA"],
+            ["STATO","SEGRETO"],
+            ["ACCESSO","LIMITATO"]
+        ],
+
+        lore:
+            "Il laboratorio contiene campioni che non sono mai stati registrati ufficialmente."
+
+    },
+
+    voidFaction: {
+
+        symbol:"◌",
+
+        title:"VOID WALKERS",
+
+        color:"#009dff",
+
+        description:
+            "Individui capaci di attraversare aree colpite dalle anomalie.",
+
+        stats:[
+            ["TIPO","NOMADI"],
+            ["STATO","ATTIVO"],
+            ["ORIGINE","VUOTO"]
+        ],
+
+        lore:
+            "I Void Walkers sembrano possedere una resistenza naturale alle anomalie spaziali."
+
+    },
+
+    unknownFaction: {
+
+        symbol:"?",
+
+        title:"[UNKNOWN]",
+
+        color:"#ffffff",
+
+        description:
+            "Tutti i dati relativi a questa fazione risultano corrotti.",
+
+        stats:[
+            ["TIPO","???"],
+            ["STATO","???"],
+            ["RISCHIO","████"]
+        ],
+
+        lore:
+            "ACCESSO NEGATO. Il database ha cancellato automaticamente il resto del file."
+
+    },
+
+
+    chaosPower: {
+
+        symbol:"☄",
+
+        title:"CHAOS",
+
+        color:"#ff5a00",
+
+        description:
+            "Energia altamente distruttiva e imprevedibile.",
+
+        stats:[
+            ["ENERGIA","96%"],
+            ["STABILITÀ","31%"],
+            ["RISCHIO","ESTREMO"]
+        ],
+
+        lore:
+            "Il Chaos aumenta rapidamente quando viene sottoposto a pressione."
+
+    },
+
+    abyssPower: {
+
+        symbol:"◈",
+
+        title:"ABISSO",
+
+        color:"#542cff",
+
+        description:
+            "Energia collegata al vuoto e alle particelle abissali.",
+
+        stats:[
+            ["ENERGIA","76%"],
+            ["STABILITÀ","46%"],
+            ["RISCHIO","ALTO"]
+        ],
+
+        lore:
+            "Le particelle abissali mostrano comportamenti impossibili secondo i modelli fisici conosciuti."
+
+    },
+
+    izanamiPower: {
+
+        symbol:"✧",
+
+        title:"IZANAMI",
+
+        color:"#ff2255",
+
+        description:
+            "Struttura energetica estremamente rara.",
+
+        stats:[
+            ["ENERGIA","84%"],
+            ["STABILITÀ","72%"],
+            ["RISCHIO","MEDIO"]
+        ],
+
+        lore:
+            "Izanami sembra essere in grado di interagire con altre fonti energetiche."
+
+    },
+
+    seraphPower: {
+
+        symbol:"✦",
+
+        title:"SERAFINO",
+
+        color:"#ff22b8",
+
+        description:
+            "Energia sconosciuta con comportamento anomalo.",
+
+        stats:[
+            ["ENERGIA","100%"],
+            ["STABILITÀ","17%"],
+            ["RISCHIO","???"]
+        ],
+
+        lore:
+            "Il Serafino è l'unico campione ad aver prodotto frequenze impossibili da classificare."
+
+    },
+
+    radioPower: {
+
+        symbol:"☢",
+
+        title:"RADIOATTIVO",
+
+        color:"#00ff88",
+
+        description:
+            "Energia instabile di origine naturale.",
+
+        stats:[
+            ["ENERGIA","61%"],
+            ["STABILITÀ","94%"],
+            ["RISCHIO","BASSO"]
+        ],
+
+        lore:
+            "Nonostante la sua natura radioattiva, questo campione presenta una stabilità sorprendentemente elevata."
+
+    },
+
+    unknownPower: {
+
+        symbol:"?",
+
+        title:"UNKNOWN",
+
+        color:"#ffffff",
+
+        description:
+            "Nessun dato disponibile.",
+
+        stats:[
+            ["ENERGIA","???"],
+            ["STABILITÀ","???"],
+            ["RISCHIO","???"]
+        ],
+
+        lore:
+            "Il sistema non riesce a riconoscere la struttura energetica."
+
+    }
+
+};
+
+
+/* =========================================================
+   BACKGROUND STARS
+========================================================= */
+
+const space =
+    document.getElementById("space");
+
+function creaStelle(){
+
+    const numero =
+        window.innerWidth < 600
+            ? 90
+            : 170;
+
+    for(let i=0;i<numero;i++){
+
+        const star =
+            document.createElement("div");
+
+        star.className="star";
+
+        star.style.left =
+            Math.random()*100+"%";
+
+        star.style.top =
+            Math.random()*100+"%";
+
+        const size =
+            Math.random() < .8
+                ? 1
+                : 2.5;
+
+        star.style.width =
+            size+"px";
+
+        star.style.height =
+            size+"px";
+
+        star.style.setProperty(
+            "--drift",
+            (Math.random()*120-60)+"px"
+        );
+
+        star.style.animationDuration =
+            (5+Math.random()*12)+"s, "+
+            (1+Math.random()*3)+"s";
+
+        star.style.animationDelay =
+            (-Math.random()*12)+"s, "+
+            (-Math.random()*4)+"s";
+
+        space.appendChild(star);
+
+    }
+
+}
+
+creaStelle();
+
+
+/* =========================================================
+   BLACK HOLES RANDOM
+========================================================= */
+
+function creaBucoNero(){
+
+    const hole =
+        document.createElement("div");
+
+    hole.className="black-hole";
+
+    const size =
+        35 + Math.random()*85;
+
+    hole.style.setProperty(
+        "--size",
+        size+"px"
+    );
+
+    hole.style.setProperty(
+        "--x",
+        (8+Math.random()*84)+"%"
+    );
+
+    hole.style.setProperty(
+        "--y",
+        (10+Math.random()*80)+"%"
+    );
+
+    space.appendChild(hole);
+
+    setTimeout(()=>{
+
+        hole.remove();
+
+    },7200);
+
+}
+
+setInterval(()=>{
+
+    if(Math.random()<.65){
+
+        creaBucoNero();
+
+    }
+
+},5000);
+
+
+/* =========================================================
+   NAVIGATION
+========================================================= */
+
+function apriSezione(nome){
+
+    document
+        .querySelectorAll(".sezione")
+        .forEach(section=>{
+
+            section.classList.remove("attiva");
+
+        });
+
+
+    const target =
+        document.getElementById(nome);
+
+    if(target){
+
+        target.classList.add("attiva");
+
+        target.scrollIntoView({
+
+            behavior:"smooth",
+
+            block:"start"
+
+        });
+
+    }
+
+
+    document
+        .getElementById("navLinks")
+        .classList.remove("mobile-open");
+
+}
+
+
+function toggleMobileMenu(){
+
+    document
+        .getElementById("navLinks")
+        .classList.toggle("mobile-open");
+
+}
+
+
+/* =========================================================
+   LABORATORIO
+========================================================= */
+
+function vaiLaboratorio(){
+
+    window.location.href =
+        "laboratorio.html";
+
+}
+
+
+/* =========================================================
+   DETAILS
+========================================================= */
+
+function mostraDettaglio(id){
+
+    const data =
+        database[id];
+
+    if(!data){
+
+        mostraToast(
+            "DATO NON DISPONIBILE"
+        );
+
+        return;
+
+    }
+
+
+    const modal =
+        document.getElementById("details");
+
+    const box =
+        document.getElementById("detailsBox");
+
+    const symbol =
+        document.getElementById("detailsSymbol");
+
+    const title =
+        document.getElementById("detailsTitle");
+
+    const description =
+        document.getElementById("detailsDescription");
+
+    const stats =
+        document.getElementById("detailsStats");
+
+    const lore =
+        document.getElementById("detailsLore");
+
+
+    box.style.setProperty(
+        "--detail-color",
+        data.color
+    );
+
+
+    symbol.textContent =
+        data.symbol;
+
+    symbol.style.color =
+        data.color;
+
+    symbol.style.borderColor =
+        data.color;
+
+
+    title.textContent =
+        data.title;
+
+    title.style.color =
+        data.color;
+
+
+    description.textContent =
+        data.description;
+
+
+    stats.innerHTML="";
+
+
+    data.stats.forEach(item=>{
+
+        const div =
+            document.createElement("div");
+
+        div.className="detail-stat";
+
+        div.innerHTML=
+
+            "<span>"+
+            item[0]+
+            "</span>"+
+
+            "<strong>"+
+            item[1]+
+            "</strong>";
+
+        stats.appendChild(div);
+
+    });
+
+
+    lore.textContent =
+        data.lore;
+
+
+    modal.classList.add("open");
+
+    document.body.style.overflow =
+        "hidden";
+
+}
+
+
+function chiudiDettaglio(event){
+
+    if(
+        event &&
+        event.target !== event.currentTarget
+    ){
+
+        return;
+
+    }
+
+
+    document
+        .getElementById("details")
+        .classList.remove("open");
+
+    document.body.style.overflow =
+        "";
+
+}
+
+
+/* =========================================================
+   ESC
+========================================================= */
+
+document.addEventListener(
+    "keydown",
+    event=>{
+
+        if(event.key==="Escape"){
+
+            chiudiDettaglio();
+
+        }
+
+    }
+);
+
+
+/* =========================================================
+   FILTRO PERSONAGGI
+========================================================= */
+
+function filtraPersonaggi(
+    categoria,
+    button
+){
+
+    document
+        .querySelectorAll(".filter-btn")
+        .forEach(btn=>{
+
+            btn.classList.remove("active");
+
+        });
+
+
+    button.classList.add("active");
+
+
+    document
+        .querySelectorAll(
+            "#personaggi-grid .archive-card"
+        )
+        .forEach(card=>{
+
+            const categories =
+                card.dataset.category
+                    .split(" ");
+
+
+            if(
+                categoria==="tutti" ||
+                categories.includes(categoria)
+            ){
+
+                card.style.display="block";
+
+            }else{
+
+                card.style.display="none";
+
+            }
+
+        });
+
+}
+
+
+/* =========================================================
+   SEARCH
+========================================================= */
+
+function cercaArchivio(){
+
+    const input =
+        document
+            .getElementById("search")
+            .value
+            .toLowerCase()
+            .trim();
+
+
+    if(!input){
+
+        document
+            .querySelectorAll(".searchable")
+            .forEach(card=>{
+
+                card.style.display="block";
+
+            });
+
+        return;
+
+    }
+
+
+    let trovato=false;
+
+
+    document
+        .querySelectorAll(".searchable")
+        .forEach(card=>{
+
+            const text =
+                (
+                    card.dataset.search ||
+                    card.textContent
+                ).toLowerCase();
+
+
+            if(text.includes(input)){
+
+                card.style.display="block";
+
+                trovato=true;
+
+            }else{
+
+                card.style.display="none";
+
+            }
+
+        });
+
+
+    if(trovato){
+
+        const section =
+            document.getElementById(
+                "personaggi"
+            );
+
+        if(
+            !section.classList.contains("attiva")
+        ){
+
+            apriSezione("personaggi");
+
+        }
+
+    }
+
+}
+
+
+/* =========================================================
+   TOAST
+========================================================= */
+
+let toastTimer=null;
+
+function mostraToast(text){
+
+    const toast =
+        document.getElementById("toast");
+
+    toast.textContent=text;
+
+    toast.classList.add("show");
+
+
+    clearTimeout(toastTimer);
+
+
+    toastTimer =
+        setTimeout(()=>{
+
+            toast.classList.remove("show");
+
+        },2200);
+
+}
+
+
+/* =========================================================
+   LOADING
+========================================================= */
+
+window.addEventListener(
+    "load",
+    ()=>{
+
+        setTimeout(()=>{
+
+            document
+                .getElementById(
+                    "loading-screen"
+                )
+                .classList.add("hidden");
+
+        },2300);
+
+    }
+);
+
+
+/* =========================================================
+   RANDOM AMBIENCE
+========================================================= */
+
+setInterval(()=>{
+
+    if(
+        Math.random()<.25
+    ){
+
+        mostraToast(
+            "⚠ ANOMALIA SPAZIALE RILEVATA"
+        );
+
+    }
+
+},12000);
+
+
+/* =========================================================
+   PREVENT DOUBLE TAP ZOOM
+========================================================= */
+
+let lastTouch=0;
+
+document.addEventListener(
+    "touchend",
+    event=>{
+
+        const now =
+            Date.now();
+
+        if(
+            now-lastTouch<=300
+        ){
+
+            event.preventDefault();
+
+        }
+
+        lastTouch=now;
+
+    },
+    {
+        passive:false
+    }
+);
+
+
+/* =========================================================
+   CONSOLE
+========================================================= */
+
+console.log(
+    "%c SILENT SCREAM RP ",
+    "color:#c04cff;font-size:20px;font-weight:bold;"
+);
+
+console.log(
+    "Sistema caricato."
+);
+
+console.log(
+    "Archivio personaggi: ONLINE"
+);
+
+console.log(
+    "Archivio fazioni: ONLINE"
+);
+
+console.log(
+    "Archivio poteri: ONLINE"
+);
+
+console.log(
+    "Laboratorio: ONLINE"
+);
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+name: Discord Annuncio
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  discord:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Invia messaggio su Discord
+        env:
+          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          curl -X POST \
+            -H "Content-Type: application/json" \
+            -d '{
+              "username": "Silent Scream",
+              "content": "📢 **Silent Scream RP è stato aggiornato!**\n\n✨ È disponibile un nuovo aggiornamento sul sito.\n\n🔗 Controlla ora le novità!"
+            }' \
+            "$DISCORD_WEBHOOK"

@@ -10,14 +10,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Invia messaggio su Discord
-        env:
-          DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      - name: Invia annuncio su Discord
         run: |
-          curl -X POST \
-            -H "Content-Type: application/json" \
-            -d '{
-              "username": "Silent Scream",
-              "content": "📢 **Silent Scream RP è stato aggiornato!**\n\n✨ È disponibile un nuovo aggiornamento sul sito.\n\n🔗 Controlla ora le novità!"
-            }' \
-            "$DISCORD_WEBHOOK"
+          curl -H "Content-Type: application/json" \
+          -X POST \
+          -d '{
+            "username": "Silent Scream",
+            "embeds": [{
+              "title": "🟣 SILENT SCREAM — UPDATE",
+              "description": "Un nuovo aggiornamento è stato pubblicato sul sito di Silent Scream RP.",
+              "color": 9043962,
+              "footer": {
+                "text": "Silent Scream RP"
+              }
+            }]
+          }' \
+          "${{ secrets.DISCORD_WEBHOOK }}"
